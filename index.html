@@ -241,13 +241,11 @@ showLocalProfile();
 for(const id of ["signupOverlay","videoOverlay"]){document.getElementById(id).addEventListener("click",e=>{if(e.target.id===id)document.getElementById(id).classList.remove("show")})}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSignup();closeVideo()}});
 selectRole("creator");render();
-</script/>// Conexión con Supabase
-const SUPABASE_URL = "https://kinmsdyshlanftndphxg.supabase.co";
-const SUPABASE_KEY = "PEGÁ_ACÁ_TU_CLAVE_PÚBLICA";
-
+</script/>// //
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
+);
 );
 </body>
 </html>
