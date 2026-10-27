@@ -1,247 +1,457 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="es">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b0b10">
-<title>Fafirome — Creadores y fans</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0810">
+<title>FAFY — Descubrí creadores</title>
 <style>
-:root{--bg:#0b0b10;--panel:#14141c;--panel2:#1d1d28;--line:#30303d;--text:#f8f7fb;--muted:#aaa8b8;--purple:#a855f7;--pink:#ec4899;--mint:#8bffcf}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 10% 0%,#4c1d9530,transparent 35%),radial-gradient(ellipse at 95% 35%,#be185d18,transparent 30%)}
-button,input,select{font:inherit}
-button{cursor:pointer;transition:transform .18s ease,filter .18s ease,background .18s ease}
-button:hover{filter:brightness(1.12);transform:translateY(-1px)}
-button:active{transform:scale(.98)}
-header{position:sticky;top:0;z-index:5;background:#0b0b10eF;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff12}
-.top{max-width:1160px;margin:auto;padding:13px 16px;display:flex;align-items:center;gap:12px}
-.logo{font-size:24px;font-weight:950;letter-spacing:-1.3px;white-space:nowrap}.logo span{background:linear-gradient(90deg,#c084fc,#f472b6);background-clip:text;-webkit-background-clip:text;color:transparent}
-.search{flex:1;min-width:80px;background:#181820;border:1px solid var(--line);border-radius:13px;padding:11px 14px;color:var(--text);outline:none}
-.search:focus,input:focus,select:focus{border-color:#a855f7;box-shadow:0 0 0 3px #a855f722}
-.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:800;color:#fff;background:linear-gradient(110deg,#9333ea,#db2777)}
-.btn.secondary{background:#242430;border:1px solid #3b3b4a}
-main{max-width:1160px;margin:auto;padding:22px 16px 52px}
-.hero{position:relative;overflow:hidden;border:1px solid #ffffff19;border-radius:25px;padding:27px 23px;margin-bottom:22px;background:linear-gradient(120deg,#20152f,#15141f 62%,#261426)}
-.hero:after{content:"";position:absolute;width:230px;height:230px;right:-55px;top:-80px;border-radius:50%;background:linear-gradient(135deg,#a855f755,#ec489955);filter:blur(7px);animation:float 7s ease-in-out infinite alternate}
-.hero-content{position:relative;z-index:1;max-width:690px}
-.eyebrow{display:inline-flex;align-items:center;gap:7px;border:1px solid #ffffff24;background:#ffffff09;border-radius:999px;padding:7px 10px;color:#e9d5ff;font-size:11px;font-weight:850;letter-spacing:1px;text-transform:uppercase}
-.pulse{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 5px #8bffcf17}
-h1{font-size:clamp(32px,7vw,58px);line-height:1.02;letter-spacing:-2px;margin:17px 0 13px}
-.gradient-text{background:linear-gradient(90deg,#d8b4fe,#f9a8d4);background-clip:text;-webkit-background-clip:text;color:transparent}
-p{color:var(--muted);line-height:1.55;margin:0}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.small-note{font-size:11px;margin-top:15px;color:#c3bfce}
-.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:27px 0 14px}
-h2{font-size:22px;margin:0;letter-spacing:-.5px}
-.sub{font-size:12px;color:var(--muted);margin-top:5px}
-.filters{display:flex;gap:8px;overflow:auto;padding:2px 0 15px;scrollbar-width:none}
-.filters::-webkit-scrollbar{display:none}
-.filters button{white-space:nowrap;background:#1a1a24;color:#d8d6e0;border:1px solid #ffffff0d;border-radius:999px;padding:9px 14px;font-size:12px;font-weight:750}
-.filters button.active{background:#7629b8;border-color:#b66bf3;color:white;box-shadow:0 5px 18px #7e22ce30}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{min-width:0;overflow:hidden;border:1px solid #ffffff12;border-radius:17px;background:linear-gradient(145deg,#181820,#121219);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;animation:rise .45s both}
-.card:hover{transform:translateY(-5px);border-color:#a855f75c;box-shadow:0 14px 32px #0005}
-.thumb{height:142px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.thumb:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,#0005)}
-.symbol{font-size:43px;filter:drop-shadow(0 8px 16px #0005);transition:transform .35s ease}
-.card:hover .symbol{transform:scale(1.12) rotate(-4deg)}
-.tag,.duration{position:absolute;z-index:1;font-size:10px;font-weight:850;background:#101014c9;border:1px solid #ffffff24;padding:5px 7px;border-radius:7px}
-.tag{left:9px;top:9px}.duration{right:9px;bottom:9px}
-.cardbody{padding:12px}
-.cardtitle{font-size:13px;font-weight:850;line-height:1.35;margin-bottom:6px}
-.creator{font-size:11px;color:var(--muted);margin-bottom:12px}
-.cardbody button{width:100%;background:#252531;color:#f2eff8;border:1px solid #ffffff12;border-radius:10px;font-size:12px;padding:9px;font-weight:800}
-.creator-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#a78bfa;margin-right:5px}
-.empty{display:none;padding:28px;text-align:center;color:var(--muted);background:var(--panel);border-radius:15px}
-.feature-row{display:grid;grid-template-columns:1fr;gap:12px;margin-top:25px}
-.feature{padding:17px;border:1px solid #ffffff13;border-radius:17px;background:#15151d;display:flex;gap:13px;align-items:flex-start}
-.feature-icon{width:42px;height:42px;flex:0 0 42px;border-radius:13px;background:linear-gradient(135deg,#6d28d9,#be185d);display:grid;place-items:center;font-size:20px}
-.feature h3{font-size:14px;margin:2px 0 6px}
-.feature p{font-size:12px}
-footer{max-width:1160px;margin:auto;border-top:1px solid #ffffff14;padding:22px 16px 38px;color:var(--muted);font-size:11px}
-footer p+p{margin-top:7px}
-.overlay{position:fixed;inset:0;background:#050509d9;backdrop-filter:blur(9px);display:none;align-items:center;justify-content:center;padding:15px;z-index:20;overflow:auto}
-.overlay.show{display:flex;animation:fade .2s ease}
-.dialog{width:100%;max-width:500px;max-height:92vh;overflow:auto;background:#171720;border:1px solid #ffffff1b;border-radius:22px;padding:21px;box-shadow:0 25px 90px #0009;animation:pop .25s ease}
-.dialog-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:17px}
-.dialog h2{font-size:23px}
-.close-x{background:#292934;border:1px solid #ffffff12;color:#fff;border-radius:10px;width:37px;height:37px;font-size:20px}
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:17px 0}
-.role{border:1px solid #393946;background:#20202a;border-radius:16px;padding:16px 12px;text-align:left;color:white;min-height:140px}
-.role.selected{border-color:#c084fc;background:linear-gradient(145deg,#48205d,#26202e);box-shadow:0 0 0 2px #a855f733}
-.role .role-icon{font-size:28px;display:block;margin-bottom:10px}
-.role strong{display:block;font-size:14px;margin-bottom:5px}
-.role small{color:#c4c0d0;line-height:1.4;display:block}
-.form-fields{display:grid;gap:11px}
-label{font-size:12px;font-weight:750;color:#e3e0eb;display:block;margin-bottom:6px}
-.field{width:100%;background:#101017;border:1px solid #383845;border-radius:11px;padding:12px;color:white;outline:none}
-.checkline{display:flex;gap:9px;align-items:flex-start;font-size:11px;color:#c5c2ce;line-height:1.45}
-.checkline input{margin-top:2px;accent-color:#a855f7}
-.form-note{font-size:11px;margin:12px 0;color:#c3bfce}
-.full{width:100%;margin-top:13px}
-.toast{display:none;border:1px solid #5e3c7b;background:#251933;color:#e9d5ff;border-radius:12px;padding:12px;font-size:12px;line-height:1.5;margin-top:12px}
-.toast.show{display:block;animation:rise .25s ease}
-.demo-player{height:190px;border-radius:14px;background:linear-gradient(135deg,#38204c,#1c3845);display:flex;align-items:center;justify-content:center;margin:14px 0;font-size:48px}
-@keyframes float{from{transform:translateY(0) scale(1)}to{transform:translateY(24px) scale(1.1)}}
-@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media(min-width:620px){.hero{padding:40px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.thumb{height:170px}.feature-row{grid-template-columns:repeat(3,1fr)}}
-@media(min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:420px){.top{gap:8px}.logo{font-size:21px}.top .btn{padding:10px;font-size:12px}.search{order:3;flex-basis:100%}.hero{padding:23px 18px}.role-grid{grid-template-columns:1fr 1fr}.role{padding:13px 10px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+:root {
+  --bg: #0b0810;
+  --panel: #15101b;
+  --panel2: #201529;
+  --pink: #ff168f;
+  --purple: #a855f7;
+  --text: #faf5ff;
+  --muted: #a79caf;
+  --line: #30213b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, Arial, sans-serif;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+.topbar {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 5%;
+  border-bottom: 1px solid var(--line);
+  background: rgba(11,8,16,.95);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo {
+  font-size: 30px;
+  font-weight: 950;
+  letter-spacing: -2px;
+  background: linear-gradient(100deg, #ff168f, #b34bff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.search {
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 13px;
+}
+.search input {
+  width: 100%;
+  background: transparent;
+  color: white;
+  padding: 12px 8px;
+  border: 0;
+  outline: 0;
+}
+.navlinks {
+  display: flex;
+  gap: 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.navlinks a:hover { color: white; }
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 17px;
+  font-weight: 750;
+  color: white;
+  background: linear-gradient(110deg, var(--pink), var(--purple));
+}
+.btn.secondary {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+}
+main {
+  width: min(1180px, 92%);
+  margin: 32px auto 70px;
+}
+.hero {
+  border: 1px solid #472048;
+  background:
+    radial-gradient(ellipse at 85% 15%, #62215c 0, transparent 42%),
+    radial-gradient(ellipse at 10% 100%, #351750 0, transparent 42%),
+    #15101b;
+  border-radius: 22px;
+  padding: clamp(24px, 5vw, 54px);
+  overflow: hidden;
+}
+.eyebrow {
+  color: #ff77c2;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(34px, 6vw, 58px);
+  line-height: 1.03;
+  letter-spacing: -2px;
+  max-width: 620px;
+  margin: 15px 0;
+}
+.gradient {
+  background: linear-gradient(90deg, #ff168f, #c084fc);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.hero p {
+  color: #c8bbd0;
+  line-height: 1.7;
+  max-width: 520px;
+}
+.actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+.section-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin:34px 0 17px;
+}
+.section-head h2 { margin:0; font-size:22px; }
+.muted { color: var(--muted); font-size:13px; }
+.filters { display:flex; gap:9px; overflow-x:auto; padding-bottom:5px; }
+.filter {
+  flex-shrink:0;
+  border:1px solid var(--line);
+  color:#d6c9df;
+  background:var(--panel);
+  padding:9px 15px;
+  border-radius:999px;
+}
+.filter.active {
+  background:#37152f;
+  border-color:var(--pink);
+  color:#ffb5dc;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:17px;
+}
+.card {
+  min-width:0;
+  border:1px solid var(--line);
+  background:var(--panel);
+  border-radius:16px;
+  overflow:hidden;
+  transition:transform .2s, border-color .2s;
+}
+.card:hover { transform:translateY(-3px); border-color:#8d3485; }
+.cover {
+  aspect-ratio: 1.5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#35132f,#54217a);
+}
+.cover:before, .cover:after {
+  content:"";
+  position:absolute;
+  width:190px;
+  height:190px;
+  border:1px solid #ffffff1b;
+  border-radius:50%;
+}
+.cover:after { width:130px;height:130px; }
+.cover .symbol {
+  font-size:45px;
+  font-weight:950;
+  color:#ffffffd9;
+  text-shadow:0 0 30px #ff168f80;
+}
+.cover.two { background:linear-gradient(135deg,#351c50,#97245f); }
+.cover.three { background:linear-gradient(135deg,#231b39,#6039a8); }
+.cover.four { background:linear-gradient(135deg,#45152e,#ad326f); }
+.cover.five { background:linear-gradient(135deg,#24143d,#5b2e79); }
+.cover.six { background:linear-gradient(135deg,#451d52,#a82b86); }
+.tag {
+  position:absolute;
+  top:11px; left:11px;
+  font-size:11px;
+  padding:6px 9px;
+  border-radius:7px;
+  background:#0b0810c9;
+  border:1px solid #ffffff26;
+}
+.card-info { padding:14px; }
+.card-info h3 { font-size:15px; margin:0 0 7px; }
+.creator { color:var(--muted); font-size:12px; }
+.card-bottom {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:14px;
+}
+.price { color:#ff83c8; font-size:13px; font-weight:800; }
+.small-btn {
+  border:1px solid #63305f;
+  color:#f7d6ff;
+  background:#2a1733;
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+}
+.empty {
+  display:none;
+  padding:35px;
+  text-align:center;
+  color:var(--muted);
+  border:1px dashed var(--line);
+  border-radius:14px;
+}
+footer {
+  border-top:1px solid var(--line);
+  padding:28px 5%;
+  color:var(--muted);
+  text-align:center;
+  font-size:12px;
+}
+.notice {
+  border:1px solid #4b294f;
+  background:#17101e;
+  padding:16px;
+  border-radius:13px;
+  color:#cbbbd2;
+  line-height:1.6;
+  font-size:13px;
+  margin-top:28px;
+}
+.modal {
+  position:fixed;
+  inset:0;
+  background:#050308ed;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal-box {
+  width:min(420px,100%);
+  background:#17101e;
+  border:1px solid #61315f;
+  border-radius:20px;
+  padding:28px;
+  text-align:center;
+}
+.modal-box h2 { font-size:28px; margin:8px 0; }
+.modal-box p { color:#c1b3cb; line-height:1.6; font-size:14px; }
+.modal-buttons { display:flex; gap:10px; margin-top:22px; }
+.modal-buttons button { flex:1; }
+.hidden { display:none !important; }
+@media(max-width:800px) {
+  .navlinks { display:none; }
+  .topbar { padding:0 4%; gap:13px; }
+  .logo { font-size:27px; }
+  .topbar .btn { padding:10px 12px; font-size:12px; }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+  main { width:92%; margin-top:20px; }
+  .card-info { padding:11px; }
+  .hero { border-radius:17px; }
+}
+@media(max-width:390px) {
+  .search { max-width:none; }
+  .topbar { gap:9px; }
+  .grid { gap:8px; }
+  .card-info h3 { font-size:13px; }
+}
 </style>
 </head>
 <body>
-<header><div class="top">
-  <div class="logo">fafi<span>rome</span></div>
-  <input class="search" id="search" type="search" placeholder="Buscar videos o creadores..." aria-label="Buscar videos o creadores">
-  <button class="btn" onclick="openSignup()">Crear cuenta</button>
-</div></header>
+
+<header class="topbar">
+  <a href="#" class="logo">FAFY</a>
+  <label class="search">
+    <span>⌕</span>
+    <input id="search" type="search" placeholder="Buscar creadores..." aria-label="Buscar creadores">
+  </label>
+  <nav class="navlinks">
+    <a href="#explorar">Explorar</a>
+    <a href="#creadores">Creadores</a>
+  </nav>
+  <button class="btn" onclick="showMessage('El registro real se conectará con Supabase.')">Entrar</button>
+</header>
+
 <main>
   <section class="hero">
-    <div class="hero-content">
-      <div class="eyebrow"><span class="pulse"></span> Comunidad de creadores</div>
-      <h1>Tu contenido.<br><span class="gradient-text">Tu comunidad.</span></h1>
-      <p>Descubrí creadores, explorá videos de muestra y prepará tu perfil en la próxima etapa de Fafirome.</p>
-      <div class="hero-actions">
-        <button class="btn" onclick="openSignup('creator')">✦ Soy creador/a</button>
-        <button class="btn secondary" onclick="openSignup('fan')">♡ Soy fan</button>
-      </div>
-      <div class="small-note">Demo visual · perfiles ficticios · sin publicaciones ni pagos reales</div>
+    <div class="eyebrow">TU ESPACIO · TU COMUNIDAD</div>
+    <h1>Descubrí algo <span class="gradient">diferente.</span></h1>
+    <p>
+      Explorá perfiles, conocé nuevos creadores y descubrí contenido exclusivo
+      en una plataforma diseñada para vos.
+    </p>
+    <div class="actions">
+      <button class="btn" onclick="document.querySelector('#explorar').scrollIntoView({behavior:'smooth'})">Explorar contenido ↗</button>
+      <button class="btn secondary" onclick="showMessage('El registro de creadores se conectará con Supabase.')">Quiero ser creador</button>
     </div>
   </section>
 
-  <div class="sectionhead">
-    <div><h2>Descubrí contenido</h2><div class="sub">Videos de muestra y perfiles ficticios</div></div>
-    <span class="count" id="count"></span>
-  </div>
-  <div class="filters" id="filters">
-    <button class="active" data-cat="Todos">Todo</button>
-    <button data-cat="Lifestyle">Lifestyle</button>
-    <button data-cat="Fitness">Fitness</button>
-    <button data-cat="Música">Música</button>
-    <button data-cat="Gaming">Gaming</button>
-  </div>
-  <section class="grid" id="grid"></section>
-  <div class="empty" id="empty">No encontramos resultados. Probá con otra búsqueda.</div>
+  <section id="explorar">
+    <div class="section-head">
+      <h2>Descubrí contenido</h2>
+      <span class="muted" id="count">6 publicaciones de muestra</span>
+    </div>
+    <div class="filters">
+      <button class="filter active" data-filter="all">Para vos</button>
+      <button class="filter" data-filter="popular">Populares</button>
+      <button class="filter" data-filter="new">Nuevos</button>
+      <button class="filter" data-filter="exclusive">Exclusivos</button>
+    </div>
 
-  <div class="sectionhead"><div><h2>Una cuenta para cada experiencia</h2><div class="sub">Elegí cómo querés participar cuando habilitemos el registro real.</div></div></div>
-  <section class="feature-row">
-    <article class="feature"><div class="feature-icon">🎬</div><div><h3>Perfil de creador/a</h3><p>Preparate para mostrar tu perfil, administrar publicaciones y crear una comunidad.</p></div></article>
-    <article class="feature"><div class="feature-icon">♡</div><div><h3>Cuenta fan</h3><p>En la versión completa podrás seguir creadores y guardar tus favoritos.</p></div></article>
-    <article class="feature"><div class="feature-icon">🛡️</div><div><h3>Seguridad primero</h3><p>La plataforma real necesitará controles de edad, consentimiento, privacidad y reportes.</p></div></article>
+    <div class="grid" id="grid">
+      <article class="card" data-type="popular" data-search="luna creadora destacado">
+        <div class="cover"><span class="symbol">F.</span><span class="tag">DESTACADO</span></div>
+        <div class="card-info">
+          <h3>Mi espacio creativo</h3>
+          <div class="creator">@creador_demo_01</div>
+          <div class="card-bottom"><span class="price">Perfil de muestra</span><button class="small-btn" onclick="showMessage('Esta es una tarjeta de demostración.')">Ver perfil</button></div>
+        </div>
+      </article>
+
+      <article class="card" data-type="new" data-search="violeta nuevo creador">
+        <div class="cover two"><span class="symbol">✦</span><span class="tag">NUEVO</span></div>
+        <div class="card-info">
+          <h3>Recién llegado</h3>
+          <div class="creator">@creador_demo_02</div>
+          <div class="card-bottom"><span class="price">Perfil de muestra</span><button class="small-btn" onclick="showMessage('Esta es una tarjeta de demostración.')">Ver perfil</button></div>
+        </div>
+      </article>
+
+      <article class="card" data-type="exclusive" data-search="exclusivo premium creador">
+        <div class="cover three"><span class="symbol">✧</span><span class="tag">EXCLUSIVO</span></div>
+        <div class="card-info">
+          <h3>Contenido para suscriptores</h3>
+          <div class="creator">@creador_demo_03</div>
+          <div class="card-bottom"><span class="price">Acceso restringido</span><button class="small-btn" onclick="showMessage('El acceso privado necesita autenticación y permisos reales.')">Ver acceso</button></div>
+        </div>
+      </article>
+
+      <article class="card" data-type="popular" data-search="colección creadora popular">
+        <div class="cover four"><span class="symbol">F+</span></div>
+        <div class="card-info">
+          <h3>Mi colección</h3>
+          <div class="creator">@creador_demo_04</div>
+          <div class="card-bottom"><span class="price">Perfil de muestra</span><button class="small-btn" onclick="showMessage('Esta es una tarjeta de demostración.')">Ver perfil</button></div>
+        </div>
+      </article>
+
+      <article class="card" data-type="new" data-search="comunidad nuevo perfil">
+        <div class="cover five"><span class="symbol">♡</span><span class="tag">NUEVO</span></div>
+        <div class="card-info">
+          <h3>Conocé mi perfil</h3>
+          <div class="creator">@creador_demo_05</div>
+          <div class="card-bottom"><span class="price">Perfil de muestra</span><button class="small-btn" onclick="showMessage('Esta es una tarjeta de demostración.')">Ver perfil</button></div>
+        </div>
+      </article>
+
+      <article class="card" data-type="exclusive" data-search="contenido premium suscripción">
+        <div class="cover six"><span class="symbol">✦</span><span class="tag">PREMIUM</span></div>
+        <div class="card-info">
+          <h3>Mi contenido premium</h3>
+          <div class="creator">@creador_demo_06</div>
+          <div class="card-bottom"><span class="price">Acceso restringido</span><button class="small-btn" onclick="showMessage('Las suscripciones todavía no están conectadas.')">Ver acceso</button></div>
+        </div>
+      </article>
+    </div>
+    <div class="empty" id="empty">No encontramos resultados. Probá otra búsqueda.</div>
+  </section>
+
+  <section id="creadores" class="notice">
+    <strong style="color:#f4c5ff">FAFY es una plataforma exclusiva para mayores de 18 años.</strong>
+    <br>
+    Antes de habilitar contenido real se implementarán verificación de edad e identidad,
+    consentimiento, denuncias, protección de datos y controles de acceso.
   </section>
 </main>
+
 <footer>
-  <p>Fafirome · Prototipo de demostración</p>
-  <p>Esta versión no crea cuentas, no guarda datos, no acepta videos ni procesa pagos. Los nombres y contenidos mostrados son ficticios y no explícitos.</p>
-  <p>Antes de publicar contenido adulto real se deben verificar edad e identidad de las personas participantes, documentar su consentimiento, implementar reportes y retirada de contenido, proteger datos personales y confirmar que los proveedores permitan expresamente este servicio.</p>
+  <div class="logo">FAFY</div>
+  <p>Una nueva forma de descubrir creadores.</p>
+  <p>Inicio · Privacidad · Términos · Ayuda</p>
+  <p>© FAFY · Proyecto en desarrollo</p>
 </footer>
 
-<div class="overlay" id="signupOverlay" role="dialog" aria-modal="true" aria-labelledby="signupTitle">
-  <div class="dialog">
-    <div class="dialog-head"><div><h2 id="signupTitle">Unite a Fafirome</h2><p class="sub">Elegí qué tipo de cuenta querés crear.</p></div><button class="close-x" onclick="closeSignup()" aria-label="Cerrar">×</button></div>
-    <div class="role-grid">
-      <button class="role" id="creatorRole" onclick="selectRole('creator')"><span class="role-icon">🎬</span><strong>Soy creador/a</strong><small>Quiero preparar un perfil para compartir contenido propio.</small></button>
-      <button class="role" id="fanRole" onclick="selectRole('fan')"><span class="role-icon">♡</span><strong>Soy fan</strong><small>Quiero descubrir creadores y seguir mis perfiles favoritos.</small></button>
+<div class="modal" id="ageModal" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
+  <div class="modal-box">
+    <div class="logo">FAFY</div>
+    <h2 id="ageTitle">¿Tenés 18 años o más?</h2>
+    <p>Esta plataforma está destinada exclusivamente a adultos. Al continuar confirmás que tenés al menos 18 años.</p>
+    <div class="modal-buttons">
+      <button class="btn secondary" onclick="leaveSite()">No, salir</button>
+      <button class="btn" onclick="acceptAge()">Sí, continuar</button>
     </div>
-    <form id="signupForm">
-      <div class="form-fields">
-        <div><label for="displayName">Nombre visible o artístico</label><input class="field" id="displayName" name="displayName" placeholder="Cómo querés aparecer" maxlength="40" required></div>
-        <div><label for="email">Correo electrónico de prueba</label><input class="field" id="email" name="email" type="email" placeholder="vos@ejemplo.com" required></div>
-        <div><label for="handle">Nombre de usuario</label><input class="field" id="handle" name="handle" placeholder="ej. mi_perfil" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required></div>
-      </div>
-      <p class="form-note">Esta demo solo valida los campos en tu navegador. No envía ni guarda la información y no crea una cuenta real.</p>
-      <label class="checkline"><input id="ageCheck" type="checkbox" required><span>Confirmo que tengo 18 años o más. Este prototipo no verifica la edad.</span></label>
-      <label class="checkline" style="margin-top:9px"><input id="termsCheck" type="checkbox" required><span>Acepto que esta es una demostración y que no debo ingresar contraseñas ni datos sensibles.</span></label>
-      <button class="btn full" type="submit">Probar registro</button>
-      <div class="toast" id="formToast" role="status"></div>
-    </form>
+    <p style="font-size:11px">Esta confirmación visual no sustituye una verificación de edad real.</p>
   </div>
 </div>
 
-<div class="overlay" id="videoOverlay" role="dialog" aria-modal="true" aria-labelledby="videoTitle">
-  <div class="dialog">
-    <div class="dialog-head"><div><h2 id="videoTitle">Video de muestra</h2><p id="videoDesc" class="sub"></p></div><button class="close-x" onclick="closeVideo()" aria-label="Cerrar">×</button></div>
-    <div class="demo-player">▶</div>
-    <p>Vista previa simulada. El reproductor real se conectará después de configurar un alojamiento de video autorizado.</p>
-    <button class="btn secondary full" onclick="closeVideo()">Cerrar</button>
-  </div>
-</div>
 <script>
-const videos=[
- {title:"Rutina para empezar el día",creator:"Luna Studio",cat:"Lifestyle",duration:"04:18",symbol:"☀️",bg:"linear-gradient(135deg,#633c77,#d17b94)"},
- {title:"Entrenamiento en casa",creator:"Nico Fit",cat:"Fitness",duration:"08:42",symbol:"💪",bg:"linear-gradient(135deg,#174d4d,#477e91)"},
- {title:"Sesión musical en vivo",creator:"Mora Beats",cat:"Música",duration:"03:36",symbol:"🎧",bg:"linear-gradient(135deg,#3b2b77,#a34a91)"},
- {title:"Mi setup y juegos favoritos",creator:"PixelFran",cat:"Gaming",duration:"06:12",symbol:"🎮",bg:"linear-gradient(135deg,#174078,#593e8b)"},
- {title:"Ideas de estilo urbano",creator:"Vale Crea",cat:"Lifestyle",duration:"05:09",symbol:"✨",bg:"linear-gradient(135deg,#7b4b2a,#c77e67)"},
- {title:"Movilidad y estiramiento",creator:"Nico Fit",cat:"Fitness",duration:"07:25",symbol:"🏃",bg:"linear-gradient(135deg,#285b35,#85a75c)"},
- {title:"Cómo produzco una pista",creator:"Mora Beats",cat:"Música",duration:"09:01",symbol:"🎹",bg:"linear-gradient(135deg,#3c2857,#cf577e)"},
- {title:"Tour de mi espacio gamer",creator:"PixelFran",cat:"Gaming",duration:"04:57",symbol:"🕹️",bg:"linear-gradient(135deg,#273b54,#7d5fc4)"}
-];
-let category="Todos",role="creator";
-const grid=document.getElementById("grid"),search=document.getElementById("search");
-function render(){
- const q=search.value.trim().toLowerCase();
- const filtered=videos.filter(v=>(category==="Todos"||v.cat===category)&&(`${v.title} ${v.creator} ${v.cat}`.toLowerCase().includes(q)));
- grid.innerHTML=filtered.map(v=>`<article class="card"><div class="thumb" style="background:${v.bg}"><span class="tag">${v.cat}</span><span class="symbol">${v.symbol}</span><span class="duration">${v.duration}</span></div><div class="cardbody"><div class="cardtitle">${v.title}</div><div class="creator"><span class="creator-dot"></span>Por ${v.creator}</div><button data-index="${videos.indexOf(v)}">▶ Ver demo</button></div></article>`).join("");
- document.getElementById("count").textContent=`${filtered.length} videos`;
- document.getElementById("empty").style.display=filtered.length?"none":"block";
- grid.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>openVideo(Number(b.dataset.index))));
-}
-document.getElementById("filters").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{category=b.dataset.cat;document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("active",x===b));render()}));
-search.addEventListener("input",render);
-function openSignup(initialRole){document.getElementById("signupOverlay").classList.add("show");document.getElementById("formToast").classList.remove("show");if(initialRole)selectRole(initialRole)}
-function closeSignup(){document.getElementById("signupOverlay").classList.remove("show")}
-function selectRole(next){role=next;document.getElementById("creatorRole").classList.toggle("selected",role==="creator");document.getElementById("fanRole").classList.toggle("selected",role==="fan");document.getElementById("signupTitle").textContent=role==="creator"?"Cuenta de creador/a":"Cuenta fan"}
-function openVideo(i){const v=videos[i];document.getElementById("videoTitle").textContent=v.title;document.getElementById("videoDesc").textContent=`${v.creator} · ${v.cat}`;document.getElementById("videoOverlay").classList.add("show")}
-function closeVideo(){document.getElementById("videoOverlay").classList.remove("show")}
-document.getElementById("signupForm").addEventListener("submit",e=>{
- e.preventDefault();
- const toast=document.getElementById("formToast");
- const profile={
-  displayName:document.getElementById("displayName").value.trim(),
-  handle:document.getElementById("handle").value.trim(),
-  role,
-  createdAt:new Date().toISOString()
- };
- // SOLO prototipo: guarda datos de prueba en este navegador, no es una cuenta segura ni sincronizada.
- try {
-  localStorage.setItem("fafirome_demo_profile",JSON.stringify(profile));
-  toast.textContent=`¡Perfil de prueba creado en este navegador! Tipo: ${role==="creator"?"creador/a":"fan"}. Usuario: @${profile.handle}. Esto NO es una cuenta real: no hay contraseña, servidor ni sincronización entre dispositivos.`;
-  toast.classList.add("show");
-  showLocalProfile();
- } catch(err) {
-  toast.textContent="No se pudo guardar en este navegador. Podés seguir probando el formulario, pero no cierres la pestaña.";
-  toast.classList.add("show");
- }
-});
-function showLocalProfile(){
- let profile;
- try { profile=JSON.parse(localStorage.getItem("fafirome_demo_profile")||"null"); } catch(e) {}
- const old=document.getElementById("localProfileCard");
- if(old) old.remove();
- if(!profile) return;
- const box=document.createElement("section");
- box.id="localProfileCard";
- box.style.cssText="margin:18px 0;padding:18px;border:1px solid #a855f755;border-radius:16px;background:#201629";
- const roleLabel=profile.role==="creator"?"Creador/a de prueba":"Fan de prueba";
- box.innerHTML=`<div style="font-size:11px;color:#d8b4fe;font-weight:800;letter-spacing:1px;text-transform:uppercase">Tu perfil local de prueba</div><h2 style="margin:8px 0">${escapeText(profile.displayName)}</h2><p>@${escapeText(profile.handle)} · ${roleLabel}</p><p style="font-size:11px;margin-top:9px">Solo se guarda en este navegador de este dispositivo. No es una cuenta real.</p><button class="btn secondary" style="margin-top:12px" id="clearLocalProfile">Borrar perfil de prueba</button>`;
- document.querySelector("main").prepend(box);
- document.getElementById("clearLocalProfile").addEventListener("click",()=>{
-  localStorage.removeItem("fafirome_demo_profile");box.remove();
- });
-}
-function escapeText(s){const d=document.createElement("div");d.textContent=String(s);return d.innerHTML;}
-showLocalProfile();
-for(const id of ["signupOverlay","videoOverlay"]){document.getElementById(id).addEventListener("click",e=>{if(e.target.id===id)document.getElementById(id).classList.remove("show")})}
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSignup();closeVideo()}});
-selectRole("creator");render();
-</script/>
+const search = document.getElementById('search');
+const cards = [...document.querySelectorAll('.card')];
+const filters = [...document.querySelectorAll('.filter')];
+let activeFilter = 'all';
 
+function updateCards() {
+  const term = search.value.toLowerCase().trim();
+  let shown = 0;
+  cards.forEach(card => {
+    const matchesTerm = card.dataset.search.includes(term);
+    const matchesFilter = activeFilter === 'all' ||
+      card.dataset.type === activeFilter;
+    const visible = matchesTerm && matchesFilter;
+    card.classList.toggle('hidden', !visible);
+    if (visible) shown++;
+  });
+  document.getElementById('count').textContent =
+    shown + (shown === 1 ? ' resultado' : ' resultados');
+  document.getElementById('empty').style.display =
+    shown ? 'none' : 'block';
+}
+search.addEventListener('input', updateCards);
+filters.forEach(button => {
+  button.addEventListener('click', () => {
+    filters.forEach(item => item.classList.remove('active'));
+    button.classList.add('active');
+    activeFilter = button.dataset.filter;
+    updateCards();
+  });
+});
+
+function showMessage(message) {
+  alert(message);
+}
+function acceptAge() {
+  document.getElementById('ageModal').classList.add('hidden');
+}
+function leaveSite() {
+  document.body.innerHTML =
+    '<main style="text-align:center;margin-top:20vh"><h1>FAFY</h1><p>Necesitás tener 18 años o más para continuar.</p></main>';
+}
+</script>
 </body>
 </html>
