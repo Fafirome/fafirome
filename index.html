@@ -454,7 +454,13 @@ function leaveSite() {
 }
 
 function abrirAcceso() {
-  alert("El registro e inicio de sesión de FAFY todavía necesitan conectarse con Supabase.");
+  const email = prompt("Ingresá tu correo electrónico:");
+  if (!email) return;
+
+  const password = prompt("Ingresá tu contraseña:");
+  if (!password) return;
+
+  alert("Ya tenemos los datos. En el siguiente paso conectaremos este formulario con Supabase.");
 }
 </script>
 </body>
