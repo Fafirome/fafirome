@@ -106,6 +106,44 @@ section{padding:40px 0}
 .field textarea{width:100%;padding:13px;border:1px solid #493449;border-radius:11px;background:#0c090f;color:#fff;font-size:16px;font-family:inherit;resize:vertical;min-height:110px}
 .field textarea:focus{border-color:var(--pink);outline:none;box-shadow:0 0 0 3px #ff2e9333}
 .field small{display:flex;justify-content:space-between;gap:10px;margin-top:6px;color:var(--muted);font-size:12px}
+.account{padding:28px 0 40px}
+.app{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;align-items:start}
+#appNav{position:sticky;top:12px;display:flex;flex-direction:column;gap:4px}
+#appNav button{text-align:left;padding:11px 14px;border:0;border-radius:11px;background:none;color:var(--muted);font-weight:bold}
+#appNav button:hover{background:#ffffff0a;color:#fff}
+#appNav button.active{background:#39203a;color:#fff;box-shadow:inset 3px 0 0 var(--pink)}
+#perfilView .wrap{width:100%}
+#viewBody h2{font-size:22px;margin:28px 0 14px}#viewBody>h2:first-child{margin-top:0}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.vcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#3d1434,#120d17) center/cover;cursor:pointer}
+.badge{position:absolute;left:8px;top:8px;padding:4px 9px;border-radius:8px;background:#000c;border:1px solid #ff2e9366;font-size:12px;font-weight:bold}
+.badge.test{left:auto;right:8px;color:#ffd166;border-color:#ffd16666}
+.dur{position:absolute;right:8px;bottom:8px;padding:3px 7px;border-radius:6px;background:#000c;font-size:12px}
+.vinfo{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}.vinfo h3{margin:0;font-size:16px;overflow-wrap:anywhere}
+.vmeta{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.ava{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#ff2e93,#7e2dff);display:inline-grid;place-items:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0}
+.vact{display:flex;gap:6px;margin-top:auto;padding-top:6px}.vact .btn{padding:9px 10px;font-size:13px;flex:1}.vact .btn:last-child{flex:0 0 40px}
+.empty{padding:40px 20px;text-align:center;border:1px dashed #5a3358;border-radius:18px;background:#ffffff05}.empty p{color:var(--muted);max-width:420px;margin:8px auto 18px;line-height:1.6}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.filters select,.filters input,.sel{padding:11px;border:1px solid #493449;border-radius:11px;background:#0c090f;color:#fff;font-size:15px;min-width:0}.filters input{flex:1 1 220px}
+.crow{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.chip2{display:flex;align-items:center;gap:10px;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px}.chip2 div{flex:1;min-width:0}.chip2 small{display:block;color:var(--muted)}.chip2 .btn{padding:8px 12px;font-size:13px}
+.cats{display:flex;gap:10px;flex-wrap:wrap}.cats .btn{padding:14px 20px}
+.prow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px;margin-bottom:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px}.prow strong{flex:1 1 200px;overflow-wrap:anywhere}.prow .btn{padding:8px 12px;font-size:13px}
+.st{padding:3px 9px;border-radius:8px;font-size:12px;background:#ffffff14}.st.published{color:#8ef0c6}.st.pending_review{color:#ffd166}.st.rejected,.st.removed{color:#ffb3c7}
+.pbox{max-width:620px}.pbox .check{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;margin:14px 0}.pbox .check input{width:auto;margin-top:3px}
+.pbox select{width:100%;padding:13px;border:1px solid #493449;border-radius:11px;background:#0c090f;color:#fff;font-size:16px}.pbox input[type=file]{padding:10px}
+progress{width:100%;height:10px;accent-color:var(--pink)}
+.player{width:min(900px,100%)}.player video{width:100%;max-height:70vh;background:#000;border-radius:12px;display:block}.pstate{padding:14px;text-align:center;color:var(--muted)}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;z-index:70;max-width:min(92%,460px);padding:13px 18px;border-radius:12px;background:#241528;border:1px solid var(--pink);transition:.2s}#toast.show{opacity:1;transform:translateX(-50%)}
+@media(max-width:760px){
+.app{grid-template-columns:1fr}.account{padding-bottom:90px}
+#appNav{position:fixed;z-index:15;left:0;right:0;bottom:0;top:auto;flex-direction:row;overflow-x:auto;gap:2px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:#0d0911f2;border-top:1px solid var(--line);backdrop-filter:blur(10px)}
+#appNav button{white-space:nowrap;padding:10px 12px;font-size:13px;box-shadow:none!important}
+.vgrid{grid-template-columns:1fr 1fr;gap:10px}.vact{flex-wrap:wrap}.vact .btn{flex:1 1 40%}
+}
+@media(max-width:480px){.vgrid{grid-template-columns:1fr}}
+
 .age{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;background:radial-gradient(ellipse at center,#271127,#08060a 70%)}
 .age-ok .age{display:none}
 .age-box{width:min(450px,100%);text-align:center;padding:30px 24px;background:#130e17;border:1px solid #4a2945;border-radius:25px}
@@ -224,7 +262,7 @@ section{padding:40px 0}
   </section>
 </main>
 
-<main id="accountPage" class="account">
+<main id="accountPage" class="account"><div class="wrap app"><nav id="appNav" aria-label="Principal"></nav><div><div id="perfilView">
   <div class="wrap account-panel">
     <div class="eyebrow">Tu espacio</div>
     <h1 style="font-size:clamp(32px,6vw,42px)">¡Bienvenido a <span>Fafy!</span></h1>
@@ -256,7 +294,10 @@ section{padding:40px 0}
       </div>
     </form>
   </div>
-</main>
+</div><div id="viewBody" class="hidden"></div></div></div></main>
+
+<div class="overlay" id="playerOverlay" role="dialog" aria-modal="true" aria-labelledby="pTitle"><div class="modal player"><button class="close" id="pClose" type="button" aria-label="Cerrar">×</button><h2 id="pTitle" style="margin-right:36px"></h2><div class="pstate" id="pState"></div><video id="pVideo" controls playsinline controlsList="nodownload" preload="metadata"></video><div class="account-actions"><button class="btn" id="pReport" type="button">Denunciar</button></div></div></div>
+<div id="toast" role="status"></div>
 
 <footer class="wrap footer">
   <span>© <span id="year"></span> Fafy</span>
@@ -460,6 +501,8 @@ async function refreshSession() {
     $("publicPage").classList.toggle("hidden", !!user);
     $("accountPage").classList.toggle("show", !!user);
     $("accountEmail").textContent = user ? (user.email || "Sesión iniciada") : "";
+    ["loginTop", "signupTop"].forEach(i => $(i).classList.toggle("hidden", !!user));
+    if (user && (!ME || ME.id !== user.id)) { ME = user; bootApp(); } else if (!user) { ME = null; }
   } catch (error) {
     console.warn("No se pudo comprobar la sesión:", error.message);
   }
@@ -565,6 +608,191 @@ if (/error_description=/.test(location.hash)) {
   showStatus("El enlace de confirmación venció o ya se usó. Iniciá sesión o registrate de nuevo.", "error");
 }
 
+/* ============ PLATAFORMA (etapa 1) ============ */
+const NAV=[["inicio","Inicio"],["explorar","Explorar"],["categorias","Categorías"],["buscar","Buscar"],["siguiendo","Siguiendo"],["favoritos","Favoritos"],["perfil","Mi perfil"],["subir","Subir contenido"],["mispub","Mis publicaciones"],["compras","Compras"],["config","Configuración"]];
+const LIM={videoMB:50,previewMB:20,thumbMB:2,maxSec:1800,prevSec:60,minPrice:100,maxPrice:1000000};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ars=n=>new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(n||0);
+const mmss=s=>{s=Math.round(s||0);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const STAT={draft:"Borrador",pending_review:"En revisión",published:"Publicado",rejected:"Rechazado",removed:"Retirado"};
+let ME=null,view="inicio",VIDS=[],MINE=[],CATS=[],FAVS=new Set(),FOLL=new Set(),BOUGHT=new Set(),F={q:"",cat:"",price:"",sort:"new",creator:""};
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),4500)}
+const empty=(t,s,b)=>`<div class="empty"><h3>${t}</h3><p>${s}</p>${b||""}</div>`;
+const NOVIDS=empty("Todavía no hay videos","Cuando los creadores publiquen y la moderación los apruebe, van a aparecer acá.",`<button class="btn primary" data-v="subir">Subir contenido</button>`);
+const grid=(l,e)=>l.length?`<div class="vgrid">${l.map(card).join("")}</div>`:(e||NOVIDS);
+const nameOf=p=>(p&&(p.display_name||p.username))||"Creador";
+
+async function loadData(){
+  const c=getClient();
+  const [v,cat,fa,fo,pu]=await Promise.all([
+    c.from("videos").select("*, profiles:creator_id(username,display_name), categories:category_id(name,slug)").eq("status","published").order("created_at",{ascending:false}).limit(200),
+    c.from("categories").select("id,name,slug").order("name"),
+    c.from("favorites").select("video_id"),c.from("follows").select("creator_id"),
+    c.from("purchases").select("video_id").eq("status","paid")]);
+  const bad=v.error||cat.error;if(bad)throw bad;
+  VIDS=v.data;CATS=cat.data;
+  FAVS=new Set((fa.data||[]).map(x=>x.video_id));FOLL=new Set((fo.data||[]).map(x=>x.creator_id));BOUGHT=new Set((pu.data||[]).map(x=>x.video_id));
+}
+function card(v){
+  const th=v.thumb_path?getClient().storage.from("thumbs").getPublicUrl(v.thumb_path).data.publicUrl:"";
+  const owned=(ME&&v.creator_id===ME.id)||v.is_free||BOUGHT.has(v.id),n=nameOf(v.profiles);
+  return `<article class="vcard"><div class="thumb" style="${th?`background-image:url('${esc(th)}')`:""}" data-play="${v.id}:${owned?"full":v.preview_path?"preview":"buy"}"><span class="badge">${v.is_free?"Gratis":ars(v.price_ars)}</span>${v.is_test?'<span class="badge test">PRUEBA</span>':""}<span class="dur">${mmss(v.duration_seconds)}</span></div><div class="vinfo"><h3>${esc(v.title)}</h3><div class="vmeta"><span class="ava">${esc(n[0]).toUpperCase()}</span>${esc(n)}</div><div class="vmeta">${esc(v.categories?.name||"Sin categoría")}</div><div class="vact">${v.preview_path&&!v.is_free?`<button class="btn" data-play="${v.id}:preview">Vista previa</button>`:""}<button class="btn primary" data-play="${v.id}:${owned?"full":"buy"}">${owned?"Ver":"Comprar"}</button><button class="btn" data-fav="${v.id}" aria-label="Favorito">${FAVS.has(v.id)?"♥":"♡"}</button></div></div></article>`;
+}
+const chip=(id,p,n)=>`<div class="chip2"><span class="ava">${esc(nameOf(p)[0]).toUpperCase()}</span><div><strong>${esc(nameOf(p))}</strong><small>@${esc(p?.username||"")} · ${n} video${n==1?"":"s"}</small></div>${ME&&id===ME.id?"":`<button class="btn" data-follow="${id}">${FOLL.has(id)?"Siguiendo":"Seguir"}</button>`}</div>`;
+function filtered(){
+  const q=F.q.toLowerCase();
+  return VIDS.filter(v=>(!F.cat||v.category_id===F.cat)&&(!F.creator||v.creator_id===F.creator)&&(F.price===""||(F.price==="free"?v.is_free:F.price==="paid"?!v.is_free:!v.is_free&&v.price_ars<=+F.price))&&(!q||[v.title,v.description,v.profiles?.username,v.profiles?.display_name].join(" ").toLowerCase().includes(q)))
+   .sort(F.sort==="pop"?(a,b)=>b.views-a.views:F.sort==="price"?(a,b)=>a.price_ars-b.price_ars:(a,b)=>new Date(b.created_at)-new Date(a.created_at));
+}
+function creators(){const m={};VIDS.forEach(v=>{(m[v.creator_id]??={p:v.profiles,n:0}).n++});return Object.entries(m)}
+const opt=(arr,sel)=>arr.map(([v,t])=>`<option value="${esc(v)}"${v===sel?" selected":""}>${esc(t)}</option>`).join("");
+const RES={
+  explorar:()=>grid(filtered(),empty("Sin resultados","Probá cambiar los filtros.")),
+  buscar:()=>{if(!F.q)return empty("Buscá videos y creadores","Escribí un título, un tema o el nombre de un creador.");
+    const q=F.q.toLowerCase(),cr=creators().filter(([,c])=>[c.p?.username,c.p?.display_name].join(" ").toLowerCase().includes(q));
+    return (cr.length?`<h2>Creadores</h2><div class="crow">${cr.map(([id,c])=>chip(id,c.p,c.n)).join("")}</div><h2>Videos</h2>`:"")+grid(filtered(),empty("Sin resultados","No encontramos videos con esa búsqueda."))}
+};
+const R={
+  inicio:()=>{if(!VIDS.length)return NOVIDS;
+    return `<h2>Recomendados</h2>${grid([...VIDS].sort((a,b)=>b.views-a.views).slice(0,8))}<h2>Novedades</h2>${grid(VIDS.slice(0,8))}<h2>Creadores destacados</h2><div class="crow">${creators().sort((a,b)=>b[1].n-a[1].n).slice(0,8).map(([id,c])=>chip(id,c.p,c.n)).join("")}</div>`},
+  explorar:()=>`<div class="filters"><select data-f="cat" aria-label="Categoría"><option value="">Todas las categorías</option>${opt(CATS.map(c=>[c.id,c.name]),F.cat)}</select><select data-f="price" aria-label="Precio">${opt([["","Cualquier precio"],["free","Gratis"],["paid","Pagos"],["2000","Hasta $2.000"],["5000","Hasta $5.000"]],F.price)}</select><select data-f="sort" aria-label="Orden">${opt([["new","Novedades"],["pop","Popularidad"],["price","Menor precio"]],F.sort)}</select><select data-f="creator" aria-label="Creador"><option value="">Todos los creadores</option>${opt(creators().map(([id,c])=>[id,nameOf(c.p)]),F.creator)}</select></div><div id="res">${RES.explorar()}</div>`,
+  categorias:()=>CATS.length?`<h2>Categorías</h2><div class="cats">${CATS.map(c=>`<button class="btn" data-cat="${c.id}">${esc(c.name)} (${VIDS.filter(v=>v.category_id===c.id).length})</button>`).join("")}</div>`:empty("Sin categorías","Todavía no hay categorías cargadas en Supabase."),
+  buscar:()=>`<div class="filters"><input data-f="q" type="search" value="${esc(F.q)}" placeholder="Buscar videos o creadores" aria-label="Buscar"></div><div id="res">${RES.buscar()}</div>`,
+  siguiendo:()=>grid(VIDS.filter(v=>FOLL.has(v.creator_id)),empty("Todavía no seguís a nadie","Seguí creadores desde Inicio o Buscar para ver sus videos acá.",`<button class="btn primary" data-v="explorar">Explorar</button>`)),
+  favoritos:()=>grid(VIDS.filter(v=>FAVS.has(v.id)),empty("No tenés favoritos","Tocá ♡ en un video para guardarlo.",`<button class="btn primary" data-v="explorar">Explorar</button>`)),
+  compras:()=>grid(VIDS.filter(v=>BOUGHT.has(v.id)),empty("No tenés compras","Los pagos con Mercado Pago todavía no están habilitados. Cuando lo estén, tus compras confirmadas aparecerán acá."))
+  ,subir:async()=>{
+    const {data:p}=await getClient().from("profiles").select("username").eq("id",ME.id).maybeSingle();
+    if(!p||!p.username)return empty("Primero completá tu perfil","Para publicar necesitás un nombre de usuario.",`<button class="btn primary" data-v="perfil">Ir a Mi perfil</button>`);
+    if(!CATS.length)return empty("Faltan categorías","Cargá categorías en Supabase (parte 2 del SQL).");
+    return `<h2>Subir contenido</h2><form id="upForm" class="pbox" novalidate>
+<label class="field"><span>Video (MP4 o WebM, hasta ${LIM.videoMB} MB y ${LIM.maxSec/60} min)</span><input id="uVideo" type="file" accept="video/mp4,video/webm"></label>
+<label class="field"><span>Miniatura (JPG, PNG o WebP, hasta ${LIM.thumbMB} MB)</span><input id="uThumb" type="file" accept="image/jpeg,image/png,image/webp"></label>
+<label class="field"><span>Título</span><input id="uTitle" maxlength="100"></label>
+<label class="field"><span>Descripción</span><textarea id="uDesc" maxlength="1000"></textarea></label>
+<label class="field"><span>Categoría</span><select id="uCat">${opt(CATS.map(c=>[c.id,c.name]),"")}</select></label>
+<label class="field"><span>Tipo</span><select id="uFree"><option value="paid">De pago</option><option value="free">Gratis</option></select></label>
+<label class="field" id="uPriceF"><span>Precio en ARS (${ars(LIM.minPrice)} a ${ars(LIM.maxPrice)})</span><input id="uPrice" type="number" min="${LIM.minPrice}" max="${LIM.maxPrice}" step="1" inputmode="numeric"></label>
+<label class="field"><span>Vista previa gratuita (opcional, hasta ${LIM.prevSec} s y ${LIM.previewMB} MB)</span><input id="uPrev" type="file" accept="video/mp4,video/webm"></label>
+<label class="check"><input id="uTest" type="checkbox"><span>Es contenido de prueba (se mostrará identificado como PRUEBA).</span></label>
+<label class="check"><input id="uOk" type="checkbox"><span>Confirmo que soy mayor de 18 años, que tengo derecho a publicar este contenido y que todas las personas que aparecen son adultas y dieron su consentimiento. Entiendo que la publicación pasa por revisión y puede ser rechazada o retirada.</span></label>
+<progress id="upBar" value="0" max="100" class="hidden"></progress><div class="status" id="upMsg" role="status"></div>
+<div class="account-actions"><button class="btn" data-save="draft" type="submit">Guardar borrador</button><button class="btn primary" data-save="pending_review" type="submit">Publicar (enviar a revisión)</button></div></form>`},
+  mispub:async()=>{
+    const {data,error}=await getClient().from("videos").select("*, categories:category_id(name)").eq("creator_id",ME.id).order("created_at",{ascending:false});
+    if(error)throw error;MINE=data;
+    if(!data.length)return empty("Todavía no publicaste nada","Subí tu primer video.",`<button class="btn primary" data-v="subir">Subir contenido</button>`);
+    return `<h2>Mis publicaciones</h2>`+data.map(v=>`<div class="prow"><strong>${esc(v.title)}</strong><span class="st ${v.status}">${STAT[v.status]||v.status}</span><span class="muted">${v.is_free?"Gratis":ars(v.price_ars)}</span><button class="btn" data-play="${v.id}:full">Ver</button>${v.status==="draft"||v.status==="rejected"?`<button class="btn primary" data-sub="${v.id}">Enviar a revisión</button>`:""}<button class="btn" data-del="${v.id}">Borrar</button></div>`).join("")},
+  config:()=>`<h2>Configuración</h2><div class="pbox"><p class="muted">Cuenta: ${esc(ME.email)}</p><form id="pwForm" novalidate><label class="field"><span>Nueva contraseña (mínimo 8 caracteres)</span><input id="newPw" type="password" minlength="8" autocomplete="new-password"></label><button class="btn primary" type="submit">Cambiar contraseña</button></form><div class="status" id="cfgMsg" role="status"></div><p class="muted" style="line-height:1.6;margin-top:24px">Privacidad: solo vos ves tu correo; el perfil público muestra tu usuario, nombre visible y descripción. La eliminación de cuenta y de datos todavía no tiene un botón automático: está pendiente de implementar.</p><button class="btn" id="cfgLogout" type="button">Cerrar sesión</button></div>`
+};
+
+async function go(name){
+  view=name;
+  document.querySelectorAll("#appNav button").forEach(b=>b.classList.toggle("active",b.dataset.v===name));
+  $("perfilView").classList.toggle("hidden",name!=="perfil");$("viewBody").classList.toggle("hidden",name==="perfil");
+  if(name==="perfil")return;
+  $("viewBody").innerHTML='<p class="muted">Cargando...</p>';
+  try{$("viewBody").innerHTML=await R[name]()}
+  catch(e){$("viewBody").innerHTML=empty("No se pudo cargar",esc(e.code==="PGRST205"||e.code==="42P01"?"Faltan las tablas de la plataforma en Supabase. Ejecutá la parte 2 del SQL.":(e.message||"Error")))}
+  window.scrollTo({top:0})
+}
+async function bootApp(){
+  $("appNav").innerHTML=NAV.map(([k,t])=>`<button type="button" data-v="${k}">${t}</button>`).join("");
+  try{await loadData()}catch(e){console.warn("loadData",e);VIDS=[];CATS=[]; if(e.code==="PGRST205"||e.code==="42P01")toast("Faltan las tablas en Supabase: ejecutá la parte 2 del SQL.")}
+  go("inicio");
+}
+
+async function play(id,kind){
+  if(kind==="buy")return toast("Los pagos todavía no están habilitados. El acceso a videos pagos se activará solo cuando el servidor confirme el pago.");
+  const v=[...VIDS,...MINE].find(x=>x.id===id);if(!v)return;
+  const path=kind==="preview"?v.preview_path:v.video_path,vid=$("pVideo"),st=$("pState");
+  $("pTitle").textContent=v.title;$("pReport").dataset.rep=id;$("playerOverlay").classList.add("show");document.body.style.overflow="hidden";
+  vid.removeAttribute("src");st.textContent="Cargando video...";st.classList.remove("hidden");
+  const {data,error}=await getClient().storage.from("videos").createSignedUrl(path||"x",300);
+  if(error||!data)return st.textContent="No tenés acceso a este video o el archivo no está disponible.";
+  vid.onwaiting=()=>{st.textContent="Cargando...";st.classList.remove("hidden")};
+  vid.oncanplay=()=>st.classList.add("hidden");
+  vid.onplaying=()=>{st.classList.add("hidden");if(!vid.dataset.v){vid.dataset.v=1;getClient().rpc("register_view",{vid:id})}};
+  vid.onerror=()=>{st.textContent="No se pudo reproducir este video. Probá de nuevo más tarde.";st.classList.remove("hidden")};
+  delete vid.dataset.v;vid.src=data.signedUrl;vid.load();
+}
+function closePlayer(){const v=$("pVideo");v.pause();v.removeAttribute("src");v.load();$("playerOverlay").classList.remove("show");document.body.style.overflow=""}
+$("pClose").onclick=closePlayer;
+$("playerOverlay").addEventListener("click",e=>{if(e.target===$("playerOverlay"))closePlayer()});
+$("pReport").onclick=async e=>{
+  const reason=prompt("Motivo de la denuncia (contenido ilegal, sin autorización, menores u otro):");if(!reason||!reason.trim())return;
+  const {error}=await getClient().from("reports").insert({reporter_id:ME.id,video_id:e.currentTarget.dataset.rep,reason:reason.trim().slice(0,500)});
+  toast(error?"No se pudo enviar la denuncia.":"Denuncia enviada. Gracias: la revisaremos.")
+};
+
+async function toggle(table,col,id,set,key){
+  const c=getClient(),on=set.has(id);
+  const r=on?await c.from(table).delete().eq(key,id):await c.from(table).insert({[key]:id,[col]:ME.id});
+  if(r.error)return toast("No se pudo guardar el cambio.");
+  on?set.delete(id):set.add(id);return !on;
+}
+document.addEventListener("click",async e=>{
+  const t=e.target.closest("[data-v],[data-play],[data-fav],[data-follow],[data-cat],[data-sub],[data-del]");if(!t||!ME)return;
+  const d=t.dataset;
+  if(d.v)go(d.v);
+  else if(d.play){const[i,k]=d.play.split(":");play(i,k)}
+  else if(d.fav){const on=await toggle("favorites","user_id",d.fav,FAVS,"video_id");if(on===undefined)return;document.querySelectorAll(`[data-fav="${d.fav}"]`).forEach(b=>b.textContent=on?"♥":"♡");if(view==="favoritos")go(view)}
+  else if(d.follow){const on=await toggle("follows","follower_id",d.follow,FOLL,"creator_id");if(on===undefined)return;document.querySelectorAll(`[data-follow="${d.follow}"]`).forEach(b=>b.textContent=on?"Siguiendo":"Seguir")}
+  else if(d.cat){F.cat=d.cat;go("explorar")}
+  else if(d.sub){const{error}=await getClient().from("videos").update({status:"pending_review",updated_at:new Date().toISOString()}).eq("id",d.sub);toast(error?"No se pudo enviar a revisión.":"Enviado a revisión.");go("mispub")}
+  else if(d.del){const v=MINE.find(x=>x.id===d.del);if(!v||!confirm("¿Borrar esta publicación? No se puede deshacer."))return;const c=getClient();
+    await c.storage.from("videos").remove([v.video_path,v.preview_path].filter(Boolean));if(v.thumb_path)await c.storage.from("thumbs").remove([v.thumb_path]);
+    const{error}=await c.from("videos").delete().eq("id",v.id);toast(error?"No se pudo borrar.":"Publicación borrada.");go("mispub")}
+});
+document.addEventListener("input",e=>{const k=e.target.dataset&&e.target.dataset.f;if(k==="q"){F.q=e.target.value;$("res").innerHTML=RES[view]()}});
+document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.f;if(k&&k!=="q"){F[k]=e.target.value;$("res").innerHTML=RES.explorar()}
+  if(e.target.id==="uFree")$("uPriceF").classList.toggle("hidden",e.target.value==="free")});
+
+const meta=f=>new Promise((res,rej)=>{const v=document.createElement("video");v.preload="metadata";v.onloadedmetadata=()=>{URL.revokeObjectURL(v.src);res(v.duration)};v.onerror=()=>rej(new Error("No se pudo leer el video: formato no compatible."));v.src=URL.createObjectURL(f)});
+async function up(bucket,path,file,onp){
+  const{data}=await getClient().auth.getSession();
+  return new Promise((res,rej)=>{const x=new XMLHttpRequest();
+    x.open("POST",`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`);
+    x.setRequestHeader("Authorization","Bearer "+data.session.access_token);x.setRequestHeader("apikey",SUPABASE_PUBLISHABLE_KEY);x.setRequestHeader("Content-Type",file.type);
+    x.upload.onprogress=e=>e.lengthComputable&&onp(e.loaded);
+    x.onload=()=>x.status<300?res():rej(new Error("Error al subir el archivo ("+x.status+"). Revisá el tamaño y el formato."));
+    x.onerror=()=>rej(new Error("Se cortó la conexión durante la subida."));x.send(file)})
+}
+document.addEventListener("submit",async e=>{
+  if(e.target.id==="pwForm"){e.preventDefault();const pw=$("newPw").value,m=$("cfgMsg");m.className="status show";
+    if(pw.length<8){m.textContent="Usá al menos 8 caracteres.";m.classList.add("error");return}
+    const{error}=await getClient().auth.updateUser({password:pw});m.textContent=error?friendlyError(error):"Contraseña actualizada.";m.classList.add(error?"error":"success");if(!error)$("newPw").value="";return}
+  if(e.target.id!=="upForm")return;e.preventDefault();
+  const status=e.submitter.dataset.save,msg=$("upMsg"),bar=$("upBar"),btns=e.target.querySelectorAll("button");
+  const say=(t,c="error")=>{msg.textContent=t;msg.className="status show "+c};
+  const vf=$("uVideo").files[0],tf=$("uThumb").files[0],pf=$("uPrev").files[0],title=$("uTitle").value.trim(),free=$("uFree").value==="free",price=free?0:Math.round(+$("uPrice").value);
+  const okV=["video/mp4","video/webm"],okI=["image/jpeg","image/png","image/webp"];
+  if(!vf)return say("Elegí el archivo de video.");if(!okV.includes(vf.type))return say("El video debe ser MP4 o WebM.");
+  if(vf.size>LIM.videoMB*1048576)return say(`El video supera los ${LIM.videoMB} MB.`);
+  if(!tf)return say("Elegí una miniatura.");if(!okI.includes(tf.type)||tf.size>LIM.thumbMB*1048576)return say(`La miniatura debe ser JPG, PNG o WebP de hasta ${LIM.thumbMB} MB.`);
+  if(title.length<3)return say("Escribí un título de al menos 3 caracteres.");
+  if(!free&&!(price>=LIM.minPrice&&price<=LIM.maxPrice))return say(`El precio debe estar entre ${ars(LIM.minPrice)} y ${ars(LIM.maxPrice)}.`);
+  if(pf&&(!okV.includes(pf.type)||pf.size>LIM.previewMB*1048576))return say(`La vista previa debe ser MP4 o WebM de hasta ${LIM.previewMB} MB.`);
+  if(!$("uOk").checked)return say("Tenés que aceptar la confirmación de mayoría de edad y derechos.");
+  btns.forEach(b=>b.disabled=true);say("Revisando archivos...","");
+  const id=crypto.randomUUID(),ext=f=>f.type.split("/")[1].replace("jpeg","jpg"),base=`${ME.id}/${id}`,done=[];
+  try{
+    const dur=await meta(vf);if(dur>LIM.maxSec)throw new Error(`El video dura más de ${LIM.maxSec/60} minutos.`);
+    if(pf&&(await meta(pf))>LIM.prevSec)throw new Error(`La vista previa dura más de ${LIM.prevSec} segundos.`);
+    const total=vf.size+tf.size+(pf?pf.size:0);let base0=0;bar.classList.remove("hidden");
+    const run=async(b,p,f)=>{await up(b,p,f,l=>{bar.value=(base0+l)/total*100;say(`Subiendo... ${Math.round(bar.value)}%`,"")});base0+=f.size;done.push([b,p])};
+    const vp=`${base}/full.${ext(vf)}`,tp=`${base}.${ext(tf)}`,pp=pf?`${base}/preview.${ext(pf)}`:null;
+    await run("videos",vp,vf);await run("thumbs",tp,tf);if(pf)await run("videos",pp,pf);
+    const{error}=await getClient().from("videos").insert({id,creator_id:ME.id,title,description:$("uDesc").value.trim(),category_id:$("uCat").value,is_free:free,price_ars:price,duration_seconds:Math.round(dur),video_path:vp,thumb_path:tp,preview_path:pp,is_test:$("uTest").checked,status});
+    if(error)throw error;
+    bar.classList.add("hidden");say(status==="draft"?"Borrador guardado.":"Enviado a revisión. Se publicará cuando sea aprobado.","success");setTimeout(()=>go("mispub"),1200);
+  }catch(err){
+    for(const[b,p]of done)await getClient().storage.from(b).remove([p]).catch(()=>{});
+    bar.classList.add("hidden");say(err.code==="42501"?"No tenés permiso para publicar (revisá las políticas RLS).":(err.message||"Error al guardar."));btns.forEach(b=>b.disabled=false)
+  }
+});
+document.addEventListener("click",e=>{if(e.target.id==="cfgLogout")$("logoutButton").click()});
+
 // Los pagos y la comisión de Mercado Pago todavía no están implementados.
 refreshSession();
 </script>
@@ -619,6 +847,111 @@ alter table public.profiles add constraint profiles_bio_len
 -- 2c. Relación con auth.users: SOLO si 1b NO muestra ya una foreign key hacia auth.users
 -- alter table public.profiles
 --   add constraint profiles_id_fkey foreign key (id) references auth.users(id) on delete cascade;
+
+-- =====================================================================
+-- PARTE 2 — PLATAFORMA (videos, categorías, seguidores, favoritos, compras,
+-- denuncias, moderación y Storage). Ejecutala SOLO después de revisar el
+-- diagnóstico de la parte 1. Usa "if not exists": no borra ni modifica datos.
+-- Requisito: public.profiles.id debe ser clave primaria (ver 1b).
+-- 2.0 Qué tablas existen ya (por si alguna choca con estos nombres)
+select table_name from information_schema.tables where table_schema='public' order by 1;
+
+-- 2.1 Perfiles públicos: los usuarios logueados pueden ver usuario/nombre/bio de los creadores
+drop policy if exists "profiles_select_public" on public.profiles;
+create policy "profiles_select_public" on public.profiles for select to authenticated using (true);
+
+-- 2.2 Tablas
+create table if not exists public.categories(
+  id uuid primary key default gen_random_uuid(), name text not null unique, slug text not null unique);
+insert into public.categories(name,slug) values
+ ('Música','musica'),('Humor','humor'),('Lifestyle','lifestyle'),('Educativo','educativo'),('Otros','otros')
+ on conflict do nothing;   -- categorías de ejemplo: editalas a gusto
+
+create table if not exists public.moderators(user_id uuid primary key references auth.users(id) on delete cascade);
+
+create table if not exists public.videos(
+  id uuid primary key default gen_random_uuid(),
+  creator_id uuid not null references public.profiles(id) on delete cascade,
+  category_id uuid references public.categories(id),
+  title text not null check (char_length(title) between 3 and 100),
+  description text not null default '' check (char_length(description) <= 1000),
+  is_free boolean not null default false,
+  price_ars integer not null default 0,
+  duration_seconds integer not null default 0,
+  video_path text not null, preview_path text, thumb_path text,
+  status text not null default 'draft' check (status in ('draft','pending_review','published','rejected','removed')),
+  is_test boolean not null default false,
+  views integer not null default 0,
+  created_at timestamptz not null default now(), updated_at timestamptz not null default now(),
+  check ((is_free and price_ars=0) or (not is_free and price_ars between 100 and 1000000)));
+create index if not exists videos_status_created on public.videos(status, created_at desc);
+create index if not exists videos_creator on public.videos(creator_id);
+
+create table if not exists public.favorites(user_id uuid references auth.users(id) on delete cascade, video_id uuid references public.videos(id) on delete cascade, created_at timestamptz default now(), primary key(user_id,video_id));
+create table if not exists public.follows(follower_id uuid references auth.users(id) on delete cascade, creator_id uuid references public.profiles(id) on delete cascade, created_at timestamptz default now(), primary key(follower_id,creator_id), check(follower_id<>creator_id));
+create table if not exists public.blocks(blocker_id uuid references auth.users(id) on delete cascade, blocked_id uuid references auth.users(id) on delete cascade, primary key(blocker_id,blocked_id), check(blocker_id<>blocked_id));
+create table if not exists public.reports(id uuid primary key default gen_random_uuid(), reporter_id uuid not null references auth.users(id) on delete cascade, video_id uuid references public.videos(id) on delete cascade, reason text not null check (char_length(reason) between 3 and 500), status text not null default 'open', created_at timestamptz default now());
+-- Compras: SOLO las crea el servidor (webhook de Mercado Pago, con la clave de servicio). Ningún usuario puede insertar.
+create table if not exists public.purchases(
+  id uuid primary key default gen_random_uuid(),
+  buyer_id uuid not null references auth.users(id), video_id uuid not null references public.videos(id),
+  amount_ars integer not null, creator_share_ars integer, fafy_fee_ars integer,
+  provider text not null default 'mercadopago', provider_payment_id text unique,
+  status text not null default 'pending' check (status in ('pending','paid','refunded','failed')),
+  created_at timestamptz not null default now(), unique(buyer_id,video_id));
+
+-- 2.3 Funciones
+create or replace function public.is_moderator() returns boolean language sql stable security definer set search_path=public
+as $$ select exists(select 1 from public.moderators where user_id=auth.uid()) $$;
+create or replace function public.can_view_file(p text) returns boolean language sql stable security definer set search_path=public
+as $$ select auth.uid() is not null and exists(select 1 from public.videos v
+  where v.status='published' and v.id::text=split_part(p,'/',2)
+  and (v.is_free or (split_part(p,'/',3) like 'preview.%' and v.preview_path is not null)
+       or exists(select 1 from public.purchases pu where pu.video_id=v.id and pu.buyer_id=auth.uid() and pu.status='paid'))) $$;
+create or replace function public.register_view(vid uuid) returns void language sql security definer set search_path=public
+as $$ update public.videos set views=views+1 where id=vid and status='published' $$;
+grant execute on function public.register_view(uuid) to authenticated;
+
+-- 2.4 RLS y permisos
+alter table public.categories enable row level security; alter table public.moderators enable row level security;
+alter table public.videos enable row level security; alter table public.favorites enable row level security;
+alter table public.follows enable row level security; alter table public.blocks enable row level security;
+alter table public.reports enable row level security; alter table public.purchases enable row level security;
+
+grant select on public.categories to authenticated;
+grant select, delete on public.videos to authenticated;
+grant insert (id,creator_id,category_id,title,description,is_free,price_ars,duration_seconds,video_path,preview_path,thumb_path,status,is_test) on public.videos to authenticated;
+grant update (category_id,title,description,is_free,price_ars,status,updated_at) on public.videos to authenticated;
+grant select, insert, delete on public.favorites, public.follows to authenticated;
+grant select, insert, delete on public.blocks to authenticated;
+grant select, insert on public.reports to authenticated;
+grant select on public.purchases to authenticated;
+
+create policy "cat_read" on public.categories for select to authenticated using (true);
+create policy "vid_read" on public.videos for select to authenticated using (status='published' or creator_id=auth.uid() or public.is_moderator());
+create policy "vid_insert" on public.videos for insert to authenticated with check (creator_id=auth.uid() and status in ('draft','pending_review'));
+create policy "vid_update_own" on public.videos for update to authenticated using (creator_id=auth.uid() and status<>'removed') with check (creator_id=auth.uid() and status in ('draft','pending_review'));
+create policy "vid_delete_own" on public.videos for delete to authenticated using (creator_id=auth.uid());
+create policy "vid_moderate" on public.videos for update to authenticated using (public.is_moderator()) with check (public.is_moderator());
+create policy "fav_own" on public.favorites for all to authenticated using (user_id=auth.uid()) with check (user_id=auth.uid());
+create policy "fol_own" on public.follows for all to authenticated using (follower_id=auth.uid()) with check (follower_id=auth.uid());
+create policy "blk_own" on public.blocks for all to authenticated using (blocker_id=auth.uid()) with check (blocker_id=auth.uid());
+create policy "rep_insert" on public.reports for insert to authenticated with check (reporter_id=auth.uid());
+create policy "rep_read" on public.reports for select to authenticated using (reporter_id=auth.uid() or public.is_moderator());
+create policy "pur_read_own" on public.purchases for select to authenticated using (buyer_id=auth.uid());
+-- Moderadores: agregá tu usuario desde el SQL Editor:  insert into public.moderators values ('<tu uuid de auth.users>');
+
+-- 2.5 Storage: 'videos' PRIVADO (acceso por URL firmada de 5 min) y 'thumbs' público.
+-- Límite 50 MB = tope del plan gratuito de Supabase; subilo si tu plan lo permite.
+insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) values
+ ('videos','videos',false,52428800,array['video/mp4','video/webm']),
+ ('thumbs','thumbs',true,2097152,array['image/jpeg','image/png','image/webp'])
+ on conflict (id) do nothing;
+create policy "st_videos_insert" on storage.objects for insert to authenticated with check (bucket_id='videos' and (storage.foldername(name))[1]=auth.uid()::text);
+create policy "st_videos_delete" on storage.objects for delete to authenticated using (bucket_id='videos' and (storage.foldername(name))[1]=auth.uid()::text);
+create policy "st_videos_select" on storage.objects for select to authenticated using (bucket_id='videos' and ((storage.foldername(name))[1]=auth.uid()::text or public.can_view_file(name)));
+create policy "st_thumbs_insert" on storage.objects for insert to authenticated with check (bucket_id='thumbs' and (storage.foldername(name))[1]=auth.uid()::text);
+create policy "st_thumbs_delete" on storage.objects for delete to authenticated using (bucket_id='thumbs' and (storage.foldername(name))[1]=auth.uid()::text);
 </script>
 </body>
 </html>
