@@ -453,15 +453,33 @@ function leaveSite() {
     '<main style="text-align:center;margin-top:20vh"><h1>FAFY</h1><p>Necesitás tener 18 años o más para continuar.</p></main>';
 }
 
-function abrirAcceso() {
+async function abrirAcceso() {
   const email = prompt("Ingresá tu correo electrónico:");
   if (!email) return;
 
   const password = prompt("Ingresá tu contraseña:");
   if (!password) return;
 
-  alert("Ya tenemos los datos. En el siguiente paso conectaremos este formulario con Supabase.");
+  const supabase = window.supabase.createClient(
+    "https://kinmsdyshlanftndphxg.supabase.co",
+    "PEGÁ_ACÁ_TU_CLAVE_PÚBLICA"
+  );
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert("No se pudo iniciar sesión: " + error.message);
+    return;
+  }
+
+  alert("¡Bienvenido a FAFY! Sesión iniciada correctamente.");
 }
+
+  alert("Ya tenemos los datos. En el siguiente paso conectaremos este formulario con Supabase.");
+} <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </script>
 </body>
 </html>
