@@ -100,6 +100,12 @@ section{padding:40px 0}
 .account.show{display:block}
 .account-panel{padding:28px;background:var(--panel);border:1px solid var(--line);border-radius:22px}
 .account-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.pform{display:none;margin-top:22px;padding-top:20px;border-top:1px solid var(--line);max-width:520px}
+.pform.show{display:block}
+.pform h2{margin:0 0 4px;font-size:22px}
+.field textarea{width:100%;padding:13px;border:1px solid #493449;border-radius:11px;background:#0c090f;color:#fff;font-size:16px;font-family:inherit;resize:vertical;min-height:110px}
+.field textarea:focus{border-color:var(--pink);outline:none;box-shadow:0 0 0 3px #ff2e9333}
+.field small{display:flex;justify-content:space-between;gap:10px;margin-top:6px;color:var(--muted);font-size:12px}
 .age{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;background:radial-gradient(ellipse at center,#271127,#08060a 70%)}
 .age-ok .age{display:none}
 .age-box{width:min(450px,100%);text-align:center;padding:30px 24px;background:#130e17;border:1px solid #4a2945;border-radius:25px}
@@ -225,10 +231,30 @@ section{padding:40px 0}
     <p class="muted" id="accountEmail"></p>
     <p>Ya iniciaste sesión. El perfil avanzado, Mercado Pago y los pagos todavía no están habilitados.</p>
     <div class="account-actions">
-      <button class="btn primary" id="profileButton" type="button">Preparar mi perfil</button>
+      <button class="btn primary" id="profileButton" type="button">Editar mi perfil</button>
       <button class="btn" id="logoutButton" type="button">Cerrar sesión</button>
     </div>
     <div id="profileNotice" class="status" role="status"></div>
+    <form id="profileForm" class="pform" novalidate>
+      <h2>Tu perfil</h2>
+      <p class="muted" style="margin:0 0 8px;font-size:14px">Así te van a ver en Fafy.</p>
+      <label class="field"><span>Nombre de usuario</span>
+        <input id="pUsername" type="text" maxlength="24" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="tu_usuario">
+        <small><span>3 a 24 caracteres: letras, números y guion bajo.</span></small>
+      </label>
+      <label class="field"><span>Nombre visible</span>
+        <input id="pDisplay" type="text" maxlength="60" autocomplete="name" placeholder="Cómo querés que te llamen">
+        <small><span></span><span id="cDisplay">0/60</span></small>
+      </label>
+      <label class="field"><span>Descripción</span>
+        <textarea id="pBio" maxlength="300" placeholder="Contá algo sobre vos"></textarea>
+        <small><span></span><span id="cBio">0/300</span></small>
+      </label>
+      <div class="account-actions">
+        <button class="btn primary" id="profileSave" type="submit">Guardar perfil</button>
+        <button class="btn" id="profileCancel" type="button">Cerrar</button>
+      </div>
+    </form>
   </div>
 </main>
 
@@ -444,6 +470,7 @@ $("logoutButton").onclick = async () => {
     const { error } = await getClient().auth.signOut();
     if (error) throw error;
     $("profileNotice").className = "status";
+    $("profileForm").classList.remove("show");
     await refreshSession();
     window.scrollTo({ top: 0, behavior: "smooth" });
   } catch (error) {
@@ -451,10 +478,86 @@ $("logoutButton").onclick = async () => {
   }
 };
 
-$("profileButton").onclick = () => {
-  $("profileNotice").textContent = "El editor de perfil todavía no está implementado.";
-  $("profileNotice").className = "status show";
-};
+/* ---- Editor de perfil ---- */
+const USERNAME_RE = /^[A-Za-z0-9_]{3,24}$/;
+let currentUserId = null;
+
+function profileMsg(text, type = "") {
+  const n = $("profileNotice");
+  n.textContent = text;
+  n.className = "status show " + type;
+}
+function updateCounters() {
+  $("cDisplay").textContent = $("pDisplay").value.length + "/60";
+  $("cBio").textContent = $("pBio").value.length + "/300";
+}
+["pDisplay", "pBio"].forEach(id => $(id).addEventListener("input", updateCounters));
+
+function profileError(error) {
+  const code = error && error.code, m = (error && error.message || "").toLowerCase();
+  if (code === "23505") return "Ese nombre de usuario ya está en uso. Probá con otro.";
+  if (code === "23514") return "Algún dato no cumple las reglas del perfil. Revisá el usuario, el nombre y la descripción.";
+  if (code === "42501" || m.includes("row-level security")) return "No tenés permiso para guardar este perfil. Cerrá sesión y volvé a entrar.";
+  if (code === "PGRST205" || code === "42P01") return "La tabla de perfiles no está disponible en Supabase.";
+  if (code === "42703" || code === "PGRST204") return "Falta una columna en la tabla profiles de Supabase. Revisá el esquema.";
+  return friendlyError(error);
+}
+
+async function openProfile() {
+  const form = $("profileForm");
+  if (form.classList.contains("show")) { form.classList.remove("show"); return; }
+  profileMsg("Cargando tu perfil...");
+  try {
+    const client = getClient();
+    const { data: s, error: se } = await client.auth.getSession();
+    if (se) throw se;
+    if (!s.session) throw new Error("Tu sesión venció. Iniciá sesión de nuevo.");
+    currentUserId = s.session.user.id;
+    const { data, error } = await client.from("profiles")
+      .select("username, display_name, bio").eq("id", currentUserId).maybeSingle();
+    if (error) throw error;
+    $("pUsername").value = (data && data.username) || "";
+    $("pDisplay").value = (data && data.display_name) || "";
+    $("pBio").value = (data && data.bio) || "";
+    updateCounters();
+    $("profileNotice").className = "status";
+    form.classList.add("show");
+    $("pUsername").focus();
+  } catch (error) {
+    profileMsg(profileError(error), "error");
+  }
+}
+
+$("profileButton").onclick = openProfile;
+$("profileCancel").onclick = () => { $("profileForm").classList.remove("show"); $("profileNotice").className = "status"; };
+
+$("profileForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const username = $("pUsername").value.trim();
+  const display_name = $("pDisplay").value.trim();
+  const bio = $("pBio").value.trim();
+  if (!USERNAME_RE.test(username)) return profileMsg("El usuario debe tener de 3 a 24 caracteres: solo letras, números y guion bajo.", "error");
+  if (display_name.length > 60) return profileMsg("El nombre visible admite hasta 60 caracteres.", "error");
+  if (bio.length > 300) return profileMsg("La descripción admite hasta 300 caracteres.", "error");
+
+  const btn = $("profileSave");
+  btn.disabled = true; btn.textContent = "Guardando...";
+  try {
+    const client = getClient();
+    const { data: s, error: se } = await client.auth.getSession();
+    if (se) throw se;
+    if (!s.session) throw new Error("Tu sesión venció. Iniciá sesión de nuevo.");
+    const row = { id: s.session.user.id, username: username.toLowerCase(), display_name, bio, updated_at: new Date().toISOString() };
+    const { data, error } = await client.from("profiles").upsert(row, { onConflict: "id" }).select("username, display_name, bio").single();
+    if (error) throw error;
+    $("pUsername").value = data.username;
+    profileMsg("¡Perfil guardado! Tu usuario es @" + data.username + ".", "success");
+  } catch (error) {
+    profileMsg(profileError(error), "error");
+  } finally {
+    btn.disabled = false; btn.textContent = "Guardar perfil";
+  }
+});
 
 /* Enlace de confirmación vencido o inválido */
 if (/error_description=/.test(location.hash)) {
@@ -464,6 +567,58 @@ if (/error_description=/.test(location.hash)) {
 
 // Los pagos y la comisión de Mercado Pago todavía no están implementados.
 refreshSession();
+</script>
+
+<!-- Guía SQL de Supabase (no se ejecuta ni se muestra: es solo para copiar al SQL Editor) -->
+<script type="text/plain" id="fafy-sql-setup">
+-- ============ PASO 1: DIAGNÓSTICO (solo lectura; pegá cada resultado en el chat) ============
+-- 1a. Columnas reales de public.profiles
+select column_name, data_type, is_nullable, column_default
+from information_schema.columns
+where table_schema='public' and table_name='profiles'
+order by ordinal_position;
+
+-- 1b. Restricciones existentes (clave primaria, foreign key a auth.users, checks)
+select conname, contype, pg_get_constraintdef(oid) as definicion
+from pg_constraint where conrelid='public.profiles'::regclass;
+
+-- 1c. Índices (¿hay unicidad en username?)
+select indexname, indexdef from pg_indexes
+where schemaname='public' and tablename='profiles';
+
+-- 1d. Políticas RLS y si RLS está activo
+select policyname, cmd, roles, qual, with_check from pg_policies
+where schemaname='public' and tablename='profiles';
+select relrowsecurity as rls_activo from pg_class where oid='public.profiles'::regclass;
+
+-- 1e. Triggers (por si hay uno que crea el perfil al registrarse)
+select tgname, pg_get_triggerdef(oid) from pg_trigger
+where tgrelid='public.profiles'::regclass and not tgisinternal;
+
+-- 1f. Filas actuales (para ver si hay usernames vacíos o duplicados)
+select id, username, display_name, left(bio,30) as bio, created_at from public.profiles;
+
+-- ============ PASO 2: REGLAS DEL PERFIL (ejecutalo SOLO si el diagnóstico lo permite) ============
+-- Cada bloque falla con un error claro si hay filas que no cumplen; no borra ni modifica datos.
+
+-- 2a. Usuario único sin distinguir mayúsculas (ignora filas con username vacío)
+create unique index if not exists profiles_username_lower_key
+  on public.profiles (lower(username)) where username <> '';
+
+-- 2b. Largos y formato (NOT VALID: no revisa filas viejas, sí las nuevas y las modificadas)
+alter table public.profiles drop constraint if exists profiles_username_format;
+alter table public.profiles add constraint profiles_username_format
+  check (username = '' or username ~ '^[A-Za-z0-9_]{3,24}$') not valid;
+alter table public.profiles drop constraint if exists profiles_display_name_len;
+alter table public.profiles add constraint profiles_display_name_len
+  check (char_length(display_name) <= 60) not valid;
+alter table public.profiles drop constraint if exists profiles_bio_len;
+alter table public.profiles add constraint profiles_bio_len
+  check (char_length(bio) <= 300) not valid;
+
+-- 2c. Relación con auth.users: SOLO si 1b NO muestra ya una foreign key hacia auth.users
+-- alter table public.profiles
+--   add constraint profiles_id_fkey foreign key (id) references auth.users(id) on delete cascade;
 </script>
 </body>
 </html>
