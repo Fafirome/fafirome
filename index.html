@@ -1,485 +1,515 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b0810">
-<title>FAFY — Descubrí creadores</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09070b">
+<title>Fafy — Tu espacio, tus reglas</title>
+
 <style>
-:root {
-  --bg: #0b0810;
-  --panel: #15101b;
-  --panel2: #201529;
-  --pink: #ff168f;
-  --purple: #a855f7;
-  --text: #faf5ff;
-  --muted: #a79caf;
-  --line: #30213b;
+:root{
+  --bg:#09070b;
+  --panel:#151019;
+  --pink:#ff2e93;
+  --pink2:#ff69b4;
+  --text:#fff7fc;
+  --muted:#b9aab8;
+  --line:#38253a;
 }
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Inter, system-ui, Arial, sans-serif;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at top right,#291127,transparent 40%),var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
 }
-button, input { font: inherit; }
-button { cursor: pointer; }
-a { color: inherit; text-decoration: none; }
-.topbar {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 0 5%;
-  border-bottom: 1px solid var(--line);
-  background: rgba(11,8,16,.95);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+button,input{font:inherit}
+button,a{cursor:pointer}
+.wrap{width:min(1100px,92%);margin:auto}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 0;border-bottom:1px solid #ffffff15;gap:15px
 }
-.logo {
-  font-size: 30px;
-  font-weight: 950;
-  letter-spacing: -2px;
-  background: linear-gradient(100deg, #ff168f, #b34bff);
-  -webkit-background-clip: text;
-  color: transparent;
+.brand{
+  display:flex;align-items:center;gap:12px;
+  font-weight:900;letter-spacing:1px;font-size:22px;
+  color:white;text-decoration:none
 }
-.search {
-  flex: 1;
-  max-width: 500px;
-  display: flex;
-  align-items: center;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 0 13px;
+.logo{
+  width:44px;height:44px;flex-shrink:0;
+  border-radius:13px;background:#000;
+  display:grid;place-items:center;
+  border:1px solid #ff2e9344;
+  box-shadow:0 0 20px #ff2e9330
 }
-.search input {
-  width: 100%;
-  background: transparent;
-  color: white;
-  padding: 12px 8px;
-  border: 0;
-  outline: 0;
+.devil{width:100%;height:100%;overflow:visible}
+.devil path{
+  fill:none;stroke:#ff168f;stroke-width:4;
+  stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 0 3px #ff168f)
+         drop-shadow(0 0 7px #ff168f)
 }
-.navlinks {
-  display: flex;
-  gap: 20px;
-  color: var(--muted);
-  font-size: 14px;
-}
-.navlinks a:hover { color: white; }
-.btn {
-  border: 0;
-  border-radius: 10px;
-  padding: 11px 17px;
-  font-weight: 750;
-  color: white;
-  background: linear-gradient(110deg, var(--pink), var(--purple));
-}
-.btn.secondary {
-  background: var(--panel2);
-  border: 1px solid var(--line);
-}
-main {
-  width: min(1180px, 92%);
-  margin: 32px auto 70px;
-}
-.hero {
-  border: 1px solid #472048;
-  background:
-    radial-gradient(ellipse at 85% 15%, #62215c 0, transparent 42%),
-    radial-gradient(ellipse at 10% 100%, #351750 0, transparent 42%),
-    #15101b;
-  border-radius: 22px;
-  padding: clamp(24px, 5vw, 54px);
-  overflow: hidden;
-}
-.eyebrow {
-  color: #ff77c2;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-.hero h1 {
-  font-size: clamp(34px, 6vw, 58px);
-  line-height: 1.03;
-  letter-spacing: -2px;
-  max-width: 620px;
-  margin: 15px 0;
-}
-.gradient {
-  background: linear-gradient(90deg, #ff168f, #c084fc);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-.hero p {
-  color: #c8bbd0;
-  line-height: 1.7;
-  max-width: 520px;
-}
-.actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
-.section-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin:34px 0 17px;
-}
-.section-head h2 { margin:0; font-size:22px; }
-.muted { color: var(--muted); font-size:13px; }
-.filters { display:flex; gap:9px; overflow-x:auto; padding-bottom:5px; }
-.filter {
-  flex-shrink:0;
+.nav{display:flex;gap:9px;align-items:center}
+.btn{
+  padding:12px 16px;border-radius:12px;
   border:1px solid var(--line);
-  color:#d6c9df;
-  background:var(--panel);
-  padding:9px 15px;
-  border-radius:999px;
+  background:#ffffff08;color:white;font-weight:bold
 }
-.filter.active {
-  background:#37152f;
-  border-color:var(--pink);
-  color:#ffb5dc;
+.btn:hover{border-color:var(--pink)}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:#160711}
+.btn.primary:hover{background:var(--pink2)}
+.hero{
+  padding:75px 0 55px;display:grid;
+  grid-template-columns:1.1fr .9fr;gap:40px;align-items:center
 }
-.grid {
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:17px;
+.eyebrow{
+  color:var(--pink2);font-size:12px;
+  font-weight:bold;letter-spacing:2px;text-transform:uppercase
 }
-.card {
-  min-width:0;
-  border:1px solid var(--line);
-  background:var(--panel);
-  border-radius:16px;
-  overflow:hidden;
-  transition:transform .2s, border-color .2s;
+h1{font-size:clamp(42px,6vw,76px);line-height:1;letter-spacing:-3px}
+h1 span{color:var(--pink)}
+.lead{font-size:18px;line-height:1.7;color:var(--muted)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.muted{color:var(--muted)}
+.preview{
+  padding:23px;border:1px solid #ffffff20;border-radius:25px;
+  background:linear-gradient(145deg,#211326,#100c14);
+  box-shadow:0 25px 80px #0008
 }
-.card:hover { transform:translateY(-3px); border-color:#8d3485; }
-.cover {
-  aspect-ratio: 1.5;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:hidden;
-  background:linear-gradient(135deg,#35132f,#54217a);
+.preview-card{
+  padding:20px;border-radius:18px;
+  background:linear-gradient(135deg,#3d1434,#17111e);
+  border:1px solid #ffffff15
 }
-.cover:before, .cover:after {
-  content:"";
-  position:absolute;
-  width:190px;
-  height:190px;
-  border:1px solid #ffffff1b;
-  border-radius:50%;
+.avatar{
+  width:48px;height:48px;border-radius:15px;
+  background:linear-gradient(135deg,#ff2e93,#7e2dff);
+  display:grid;place-items:center;font-size:22px;font-weight:bold
 }
-.cover:after { width:130px;height:130px; }
-.cover .symbol {
-  font-size:45px;
-  font-weight:950;
-  color:#ffffffd9;
-  text-shadow:0 0 30px #ff168f80;
+.row{display:flex;gap:12px;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.stat{padding:12px;background:#ffffff09;border-radius:12px}
+.stat strong,.stat small{display:block}
+.stat small{font-size:11px;color:var(--muted);margin-top:5px}
+section{padding:40px 0}
+.section-title{font-size:clamp(27px,4vw,40px);letter-spacing:-1px}
+.section-sub{color:var(--muted);line-height:1.7;max-width:650px}
+.cards,.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:25px}
+.card{padding:23px;background:var(--panel);border:1px solid var(--line);border-radius:18px}
+.card h3{margin-top:0}
+.card p,.step p{color:var(--muted);line-height:1.6}
+.icon{font-size:25px;color:var(--pink2);margin-bottom:15px}
+.step{padding:20px 5px;border-top:1px solid var(--line)}
+.step b{color:var(--pink)}
+.cta{
+  padding:30px;border:1px solid #ff2e9344;border-radius:22px;
+  background:linear-gradient(120deg,#281124,#17101d);
+  display:flex;align-items:center;justify-content:space-between;gap:20px
 }
-.cover.two { background:linear-gradient(135deg,#351c50,#97245f); }
-.cover.three { background:linear-gradient(135deg,#231b39,#6039a8); }
-.cover.four { background:linear-gradient(135deg,#45152e,#ad326f); }
-.cover.five { background:linear-gradient(135deg,#24143d,#5b2e79); }
-.cover.six { background:linear-gradient(135deg,#451d52,#a82b86); }
-.tag {
-  position:absolute;
-  top:11px; left:11px;
-  font-size:11px;
-  padding:6px 9px;
-  border-radius:7px;
-  background:#0b0810c9;
-  border:1px solid #ffffff26;
+.footer{
+  margin-top:45px;padding:25px 0 35px;
+  border-top:1px solid #ffffff15;color:var(--muted);
+  display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;font-size:13px
 }
-.card-info { padding:14px; }
-.card-info h3 { font-size:15px; margin:0 0 7px; }
-.creator { color:var(--muted); font-size:12px; }
-.card-bottom {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin-top:14px;
+.overlay{
+  position:fixed;inset:0;z-index:20;display:none;
+  align-items:center;justify-content:center;padding:18px;
+  background:#050307e8;backdrop-filter:blur(8px)
 }
-.price { color:#ff83c8; font-size:13px; font-weight:800; }
-.small-btn {
-  border:1px solid #63305f;
-  color:#f7d6ff;
-  background:#2a1733;
-  border-radius:8px;
-  padding:8px 10px;
-  font-size:12px;
+.overlay.show{display:flex}
+.modal{
+  width:min(450px,100%);position:relative;
+  padding:25px;border:1px solid #4a2b49;border-radius:23px;
+  background:#140f18;box-shadow:0 25px 90px #0009
 }
-.empty {
-  display:none;
-  padding:35px;
-  text-align:center;
-  color:var(--muted);
-  border:1px dashed var(--line);
-  border-radius:14px;
+.close{
+  position:absolute;right:15px;top:12px;
+  border:0;background:none;color:white;font-size:25px
 }
-footer {
-  border-top:1px solid var(--line);
-  padding:28px 5%;
-  color:var(--muted);
-  text-align:center;
-  font-size:12px;
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#09070b;padding:4px;border-radius:12px;margin:20px 0}
+.tab{padding:11px;border:0;border-radius:9px;background:none;color:var(--muted);font-weight:bold}
+.tab.active{background:#39203a;color:white}
+.field{display:block;margin:14px 0}
+.field span{display:block;margin-bottom:7px;font-size:14px}
+.field input{
+  width:100%;padding:13px;border:1px solid #493449;
+  border-radius:11px;background:#0c090f;color:white
 }
-.notice {
-  border:1px solid #4b294f;
-  background:#17101e;
-  padding:16px;
-  border-radius:13px;
-  color:#cbbbd2;
-  line-height:1.6;
-  font-size:13px;
-  margin-top:28px;
+.full{width:100%;margin-top:8px}
+.status{display:none;margin-top:14px;padding:12px;border-radius:10px;background:#ffffff0b;overflow-wrap:anywhere;font-size:14px}
+.status.show{display:block}
+.status.error{color:#ffb3c7}
+.status.success{color:#8ef0c6}
+.hidden{display:none!important}
+.account{display:none;padding:65px 0;min-height:60vh}
+.account.show{display:block}
+.account-panel{padding:28px;background:var(--panel);border:1px solid var(--line);border-radius:22px}
+.age{
+  position:fixed;inset:0;z-index:50;display:flex;
+  align-items:center;justify-content:center;padding:20px;
+  background:radial-gradient(ellipse at center,#271127,#08060a 70%)
 }
-.modal {
-  position:fixed;
-  inset:0;
-  background:#050308ed;
-  z-index:50;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+.age-box{
+  width:min(450px,100%);text-align:center;padding:30px 24px;
+  background:#130e17;border:1px solid #4a2945;border-radius:25px
 }
-.modal-box {
-  width:min(420px,100%);
-  background:#17101e;
-  border:1px solid #61315f;
-  border-radius:20px;
-  padding:28px;
-  text-align:center;
-}
-.modal-box h2 { font-size:28px; margin:8px 0; }
-.modal-box p { color:#c1b3cb; line-height:1.6; font-size:14px; }
-.modal-buttons { display:flex; gap:10px; margin-top:22px; }
-.modal-buttons button { flex:1; }
-.hidden { display:none !important; }
-@media(max-width:800px) {
-  .navlinks { display:none; }
-  .topbar { padding:0 4%; gap:13px; }
-  .logo { font-size:27px; }
-  .topbar .btn { padding:10px 12px; font-size:12px; }
-  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
-  main { width:92%; margin-top:20px; }
-  .card-info { padding:11px; }
-  .hero { border-radius:17px; }
-}
-@media(max-width:390px) {
-  .search { max-width:none; }
-  .topbar { gap:9px; }
-  .grid { gap:8px; }
-  .card-info h3 { font-size:13px; }
+.age-logo{width:76px;height:76px;margin:0 auto 20px}
+.age h2{font-size:30px}
+.age p{color:var(--muted);line-height:1.6}
+.age-buttons{display:grid;gap:10px;margin-top:22px}
+.age-buttons button{width:100%}
+@media(max-width:760px){
+  .hero{grid-template-columns:1fr;padding:45px 0 25px}
+  .cards,.steps{grid-template-columns:1fr}
+  .cta{align-items:flex-start;flex-direction:column}
+  .nav .optional{display:none}
+  .topbar{padding:14px 0}
+  h1{letter-spacing:-2px}
 }
 </style>
 </head>
+
 <body>
 
-<header class="topbar">
-  <a href="#" class="logo">FAFY</a>
-  <label class="search">
-    <span>⌕</span>
-    <input id="search" type="search" placeholder="Buscar creadores..." aria-label="Buscar creadores">
-  </label>
-  <nav class="navlinks">
-    <a href="#explorar">Explorar</a>
-    <a href="#creadores">Creadores</a>
-  </nav>
-  <button class="btn" onclick="abrirAcceso()">Entrar</button>
-</header>
+<!-- LOGO ORIGINAL DIBUJADO EN SVG -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="fafy-devil" viewBox="0 0 100 100">
+    <path d="M20 34
+      C12 25 16 13 30 7
+      C27 19 32 28 42 31
+      C47 27 53 27 58 31
+      C68 28 73 19 70 7
+      C84 13 88 25 80 34
+      C84 45 81 61 70 72
+      L53 91
+      Q50 95 47 91
+      L30 72
+      C19 61 16 45 20 34 Z"/>
+    <path d="M29 48 Q38 42 45 51 Q37 57 29 48 Z"/>
+    <path d="M71 48 Q62 42 55 51 Q63 57 71 48 Z"/>
+    <path d="M34 66 Q50 81 66 66"/>
+  </symbol>
+</svg>
 
-<main>
-  <section class="hero">
-    <div class="eyebrow">TU ESPACIO · TU COMUNIDAD</div>
-    <h1>Descubrí algo <span class="gradient">diferente.</span></h1>
-    <p>
-      Explorá perfiles, conocé nuevos creadores y descubrí contenido exclusivo
-      en una plataforma diseñada para vos.
-    </p>
-    <div class="actions">
-      <button class="btn" onclick="document.querySelector('#explorar').scrollIntoView({behavior:'smooth'})">Explorar contenido ↗</button>
-      <button class="btn secondary" onclick="showMessage('El registro de creadores se conectará con Supabase.')">Quiero ser creador</button>
+<div id="ageGate" class="age">
+  <div class="age-box">
+    <div class="age-logo">
+      <div class="logo" style="width:76px;height:76px;border-radius:20px">
+        <svg class="devil" viewBox="0 0 100 100">
+          <use href="#fafy-devil" stroke="#ff168f"/>
+        </svg>
+      </div>
     </div>
-  </section>
-
-  <section id="explorar">
-    <div class="section-head">
-      <h2>Descubrí contenido</h2>
-      <span class="muted" id="count">6 publicaciones de muestra</span>
+    <div class="eyebrow">Contenido para adultos</div>
+    <h2>¿Tenés 18 años o más?</h2>
+    <p>Fafy está destinada exclusivamente a personas adultas. Confirmá tu edad para continuar.</p>
+    <div class="age-buttons">
+      <button class="btn primary" id="ageYes">Sí, soy mayor de 18 años</button>
+      <button class="btn" id="ageNo">No, salir</button>
     </div>
-    <div class="filters">
-      <button class="filter active" data-filter="all">Para vos</button>
-      <button class="filter" data-filter="popular">Populares</button>
-      <button class="filter" data-filter="new">Nuevos</button>
-      <button class="filter" data-filter="exclusive">Exclusivos</button>
-    </div>
-
-    <div class="grid" id="grid">
-      <article class="card" data-type="popular" data-search="luna creadora destacado">
-        <div class="cover"><span class="symbol">F.</span><span class="tag">DESTACADO</span></div>
-        <div class="card-info">
-          <h3>Mi espacio creativo</h3>
-          <div class="creator">@creador_demo_01</div>
-          <div class="card-bottom"><span class="price">Perfil de muestra</span><button class="small-btn" onclick="showMessage('Esta es una tarjeta de demostración.')">Ver perfil</button></div>
-        </div>
-      </article>
-
-      <article class="card" data-type="new" data-search="violeta nuevo creador">
-        <div class="cover two"><span class="symbol">✦</span><span class="tag">NUEVO</span></div>
-        <div class="card-info">
-          <h3>Recién llegado</h3>
-          <div class="creator">@creador_demo_02</div>
-          <div class="card-bottom"><span class="price">Perfil de muestra</span><button class="small-btn" onclick="showMessage('Esta es una tarjeta de demostración.')">Ver perfil</button></div>
-        </div>
-      </article>
-
-      <article class="card" data-type="exclusive" data-search="exclusivo premium creador">
-        <div class="cover three"><span class="symbol">✧</span><span class="tag">EXCLUSIVO</span></div>
-        <div class="card-info">
-          <h3>Contenido para suscriptores</h3>
-          <div class="creator">@creador_demo_03</div>
-          <div class="card-bottom"><span class="price">Acceso restringido</span><button class="small-btn" onclick="showMessage('El acceso privado necesita autenticación y permisos reales.')">Ver acceso</button></div>
-        </div>
-      </article>
-
-      <article class="card" data-type="popular" data-search="colección creadora popular">
-        <div class="cover four"><span class="symbol">F+</span></div>
-        <div class="card-info">
-          <h3>Mi colección</h3>
-          <div class="creator">@creador_demo_04</div>
-          <div class="card-bottom"><span class="price">Perfil de muestra</span><button class="small-btn" onclick="showMessage('Esta es una tarjeta de demostración.')">Ver perfil</button></div>
-        </div>
-      </article>
-
-      <article class="card" data-type="new" data-search="comunidad nuevo perfil">
-        <div class="cover five"><span class="symbol">♡</span><span class="tag">NUEVO</span></div>
-        <div class="card-info">
-          <h3>Conocé mi perfil</h3>
-          <div class="creator">@creador_demo_05</div>
-          <div class="card-bottom"><span class="price">Perfil de muestra</span><button class="small-btn" onclick="showMessage('Esta es una tarjeta de demostración.')">Ver perfil</button></div>
-        </div>
-      </article>
-
-      <article class="card" data-type="exclusive" data-search="contenido premium suscripción">
-        <div class="cover six"><span class="symbol">✦</span><span class="tag">PREMIUM</span></div>
-        <div class="card-info">
-          <h3>Mi contenido premium</h3>
-          <div class="creator">@creador_demo_06</div>
-          <div class="card-bottom"><span class="price">Acceso restringido</span><button class="small-btn" onclick="showMessage('Las suscripciones todavía no están conectadas.')">Ver acceso</button></div>
-        </div>
-      </article>
-    </div>
-    <div class="empty" id="empty">No encontramos resultados. Probá otra búsqueda.</div>
-  </section>
-
-  <section id="creadores" class="notice">
-    <strong style="color:#f4c5ff">FAFY es una plataforma exclusiva para mayores de 18 años.</strong>
-    <br>
-    Antes de habilitar contenido real se implementarán verificación de edad e identidad,
-    consentimiento, denuncias, protección de datos y controles de acceso.
-  </section>
-</main>
-
-<footer>
-  <div class="logo">FAFY</div>
-  <p>Una nueva forma de descubrir creadores.</p>
-  <p>Inicio · Privacidad · Términos · Ayuda</p>
-  <p>© FAFY · Proyecto en desarrollo</p>
-</footer>
-
-<div class="modal" id="ageModal" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
-  <div class="modal-box">
-    <div class="logo">FAFY</div>
-    <h2 id="ageTitle">¿Tenés 18 años o más?</h2>
-    <p>Esta plataforma está destinada exclusivamente a adultos. Al continuar confirmás que tenés al menos 18 años.</p>
-    <div class="modal-buttons">
-      <button class="btn secondary" onclick="leaveSite()">No, salir</button>
-      <button class="btn" onclick="acceptAge()">Sí, continuar</button>
-    </div>
-    <p style="font-size:11px">Esta confirmación visual no sustituye una verificación de edad real.</p>
+    <p style="font-size:12px">La confirmación es una barrera inicial, no una verificación legal de edad.</p>
   </div>
 </div>
 
-<script>
-const search = document.getElementById('search');
-const cards = [...document.querySelectorAll('.card')];
-const filters = [...document.querySelectorAll('.filter')];
-let activeFilter = 'all';
+<header class="wrap topbar">
+  <a class="brand" href="#">
+    <span class="logo">
+      <svg class="devil" viewBox="0 0 100 100"><use href="#fafy-devil"/></svg>
+    </span>
+    Fafy
+  </a>
+  <nav class="nav">
+    <a class="btn optional" href="#como-funciona" style="text-decoration:none">Cómo funciona</a>
+    <button class="btn" id="loginTop">Iniciar sesión</button>
+    <button class="btn primary" id="signupTop">Crear cuenta</button>
+  </nav>
+</header>
 
-function updateCards() {
-  const term = search.value.toLowerCase().trim();
-  let shown = 0;
-  cards.forEach(card => {
-    const matchesTerm = card.dataset.search.includes(term);
-    const matchesFilter = activeFilter === 'all' ||
-      card.dataset.type === activeFilter;
-    const visible = matchesTerm && matchesFilter;
-    card.classList.toggle('hidden', !visible);
-    if (visible) shown++;
-  });
-  document.getElementById('count').textContent =
-    shown + (shown === 1 ? ' resultado' : ' resultados');
-  document.getElementById('empty').style.display =
-    shown ? 'none' : 'block';
-}
-search.addEventListener('input', updateCards);
-filters.forEach(button => {
-  button.addEventListener('click', () => {
-    filters.forEach(item => item.classList.remove('active'));
-    button.classList.add('active');
-    activeFilter = button.dataset.filter;
-    updateCards();
-  });
+<main id="publicPage">
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow">✦ Tu espacio. Tus reglas.</div>
+      <h1>Tu contenido.<br><span>Tu comunidad.</span></h1>
+      <p class="lead">Un espacio pensado para que los creadores construyan su comunidad y administren su contenido desde un solo lugar.</p>
+      <div class="actions">
+        <button class="btn primary" id="signupHero">Crear mi cuenta</button>
+        <a class="btn" href="#como-funciona" style="text-decoration:none">Conocer más</a>
+      </div>
+      <p class="muted">Solo para mayores de 18 años.</p>
+    </div>
+
+    <div class="preview">
+      <div class="row" style="justify-content:space-between;margin-bottom:18px">
+        <strong>Panel de creador</strong>
+        <span style="color:#55dfaa;font-size:12px">Vista previa</span>
+      </div>
+      <div class="preview-card">
+        <div class="row">
+          <div class="avatar">F</div>
+          <div><strong>Tu perfil</strong><div class="muted">Tu comunidad empieza acá</div></div>
+        </div>
+        <div style="height:9px;background:#ffffff1b;border-radius:10px;margin-top:18px"></div>
+        <div style="height:9px;width:55%;background:#ffffff1b;border-radius:10px;margin-top:10px"></div>
+        <div class="stats">
+          <div class="stat"><strong>Perfil</strong><small>Personalizable</small></div>
+          <div class="stat"><strong>Fans</strong><small>Comunidad</small></div>
+          <div class="stat"><strong>Contenido</strong><small>Tu espacio</small></div>
+        </div>
+      </div>
+      <p class="muted" style="font-size:12px">Vista ilustrativa; algunas funciones todavía están en desarrollo.</p>
+    </div>
+  </div>
+
+  <section class="wrap">
+    <h2 class="section-title">Un lugar para crecer a tu manera</h2>
+    <p class="section-sub">Prepará tu cuenta y tu perfil. Las funciones de publicaciones, suscripciones y pagos se habilitarán cuando estén implementadas y verificadas.</p>
+    <div class="cards">
+      <article class="card"><div class="icon">✦</div><h3>Tu perfil</h3><p>Presentate con una identidad propia y prepará tu espacio.</p></article>
+      <article class="card"><div class="icon">♡</div><h3>Tu comunidad</h3><p>Un lugar pensado para conectar con quienes te siguen.</p></article>
+      <article class="card"><div class="icon">⌁</div><h3>Tu cuenta</h3><p>Accedé con tu correo y contraseña de forma segura.</p></article>
+    </div>
+  </section>
+
+  <section class="wrap" id="como-funciona">
+    <h2 class="section-title">Empezá en tres pasos</h2>
+    <div class="steps">
+      <article class="step"><b>01</b><h3>Creá tu cuenta</h3><p>Registrate con correo y contraseña.</p></article>
+      <article class="step"><b>02</b><h3>Confirmá tu correo</h3><p>Si se solicita, revisá tu bandeja de entrada.</p></article>
+      <article class="step"><b>03</b><h3>Prepará tu perfil</h3><p>Ingresá a tu cuenta y preparate para las próximas funciones.</p></article>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="cta">
+      <div><h2>¿Listo para empezar?</h2><p class="muted">Creá tu cuenta gratis en Fafy.</p></div>
+      <button class="btn primary" id="signupBottom">Crear cuenta</button>
+    </div>
+  </section>
+</main>
+
+<main id="accountPage" class="account">
+  <div class="wrap account-panel">
+    <div class="eyebrow">Tu espacio</div>
+    <h1 style="font-size:42px">¡Bienvenido a <span>Fafy!</span></h1>
+    <p class="muted" id="accountEmail"></p>
+    <p>Tu cuenta puede iniciar sesión. El perfil avanzado, Mercado Pago y los pagos todavía no están habilitados.</p>
+    <button class="btn primary" id="profileButton">Preparar mi perfil</button>
+    <button class="btn" id="logoutButton">Cerrar sesión</button>
+    <div id="profileNotice" class="status"></div>
+  </div>
+</main>
+
+<footer class="wrap footer">
+  <span>© <span id="year"></span> Fafy</span>
+  <span>Solo mayores de 18 años · Privacidad · Términos</span>
+</footer>
+
+<div class="overlay" id="authOverlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="close" id="closeAuth" aria-label="Cerrar">×</button>
+    <div class="eyebrow">Bienvenido a Fafy</div>
+    <h2 id="authTitle">Creá tu cuenta</h2>
+    <p id="authIntro" class="muted">Usá tu correo electrónico para registrarte.</p>
+    <div class="tabs">
+      <button class="tab active" id="tabSignup">Registrarse</button>
+      <button class="tab" id="tabLogin">Iniciar sesión</button>
+    </div>
+    <form id="authForm">
+      <label class="field"><span>Correo electrónico</span>
+        <input id="email" type="email" autocomplete="email" placeholder="vos@correo.com" required>
+      </label>
+      <label class="field"><span>Contraseña</span>
+        <input id="password" type="password" minlength="8" autocomplete="new-password" placeholder="Mínimo 8 caracteres" required>
+      </label>
+      <label class="field" id="confirmField"><span>Repetí la contraseña</span>
+        <input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Volvé a escribirla" required>
+      </label>
+      <button class="btn primary full" id="submitAuth" type="submit">Crear cuenta</button>
+    </form>
+    <div class="status" id="authStatus" role="status"></div>
+    <p class="muted" style="font-size:12px">Usá la plataforma legalmente y respetá la privacidad y los derechos de otras personas.</p>
+  </div>
+</div>
+
+<!-- Supabase: reemplazá la clave de ejemplo por la clave pública de tu proyecto. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://kinmsdyshlanftndphxg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "PONE_AQUI_TU_CLAVE_PUBLICA_DE_SUPABASE";
+
+let supabaseClient = null;
+let authMode = "signup";
+const $ = id => document.getElementById(id);
+
+$("year").textContent = new Date().getFullYear();
+
+$("ageYes").addEventListener("click", () => {
+  $("ageGate").classList.add("hidden");
+  try { sessionStorage.setItem("fafy_age_confirmed","yes"); } catch(e) {}
 });
 
-function showMessage(message) {
-  alert(message);
-}
-function acceptAge() {
-  document.getElementById('ageModal').classList.add('hidden');
-}
-function leaveSite() {
+$("ageNo").addEventListener("click", () => {
   document.body.innerHTML =
-    '<main style="text-align:center;margin-top:20vh"><h1>FAFY</h1><p>Necesitás tener 18 años o más para continuar.</p></main>';
-}
+    '<div style="background:#09070b;color:white;min-height:100vh;display:grid;place-items:center;text-align:center;font-family:Arial"><div><h1>Fafy</h1><p>Necesitás tener 18 años o más para continuar.</p></div></div>';
+});
 
-async function abrirAcceso() {
-  const email = prompt("Ingresá tu correo electrónico:");
-  if (!email) return;
-
-  const password = prompt("Ingresá tu contraseña:");
-  if (!password) return;
-
-  const supabase = window.supabase.createClient(
-    "https://kinmsdyshlanftndphxg.supabase.co",
-    "PEGÁ_ACÁ_TU_CLAVE_PÚBLICA"
-  );
-
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  if (error) {
-    alert("No se pudo iniciar sesión: " + error.message);
-    return;
+try {
+  if(sessionStorage.getItem("fafy_age_confirmed")==="yes"){
+    $("ageGate").classList.add("hidden");
   }
+} catch(e) {}
 
-  alert("¡Bienvenido a FAFY! Sesión iniciada correctamente.");
+function getClient(){
+  if(supabaseClient) return supabaseClient;
+  if(!window.supabase) throw new Error("No se pudo cargar Supabase. Revisá tu conexión.");
+  if(SUPABASE_PUBLISHABLE_KEY.includes("PONE_AQUI")){
+    throw new Error("Falta colocar la clave pública de Supabase en el código.");
+  }
+  supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+  return supabaseClient;
 }
 
-  alert("Ya tenemos los datos. En el siguiente paso conectaremos este formulario con Supabase.");
-} <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+function showStatus(message,type=""){
+  const box=$("authStatus");
+  box.textContent=message;
+  box.className="status show "+type;
+}
+
+function setMode(mode){
+  authMode=mode;
+  const signup=mode==="signup";
+  $("tabSignup").classList.toggle("active",signup);
+  $("tabLogin").classList.toggle("active",!signup);
+  $("authTitle").textContent=signup?"Creá tu cuenta":"Iniciá sesión";
+  $("authIntro").textContent=signup
+    ?"Usá tu correo electrónico para registrarte."
+    :"Ingresá con tu correo y contraseña.";
+  $("submitAuth").textContent=signup?"Crear cuenta":"Entrar";
+  $("confirmField").classList.toggle("hidden",!signup);
+  $("confirmPassword").required=signup;
+  $("password").autocomplete=signup?"new-password":"current-password";
+  $("authStatus").className="status";
+  $("authStatus").textContent="";
+}
+
+function openAuth(mode="signup"){
+  $("authOverlay").classList.add("show");
+  setMode(mode);
+}
+
+function closeAuth(){
+  $("authOverlay").classList.remove("show");
+  $("authForm").reset();
+  $("authStatus").className="status";
+}
+
+$("signupTop").onclick=()=>openAuth("signup");
+$("signupHero").onclick=()=>openAuth("signup");
+$("signupBottom").onclick=()=>openAuth("signup");
+$("loginTop").onclick=()=>openAuth("login");
+$("closeAuth").onclick=closeAuth;
+
+$("authOverlay").addEventListener("click",event=>{
+  if(event.target===$("authOverlay")) closeAuth();
+});
+
+$("tabSignup").onclick=()=>setMode("signup");
+$("tabLogin").onclick=()=>setMode("login");
+
+$("authForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+
+  const email=$("email").value.trim();
+  const password=$("password").value;
+  const confirm=$("confirmPassword").value;
+  const submit=$("submitAuth");
+
+  submit.disabled=true;
+  submit.textContent="Un momento...";
+
+  try{
+    const client=getClient();
+
+    if(authMode==="signup"){
+      if(password!==confirm) throw new Error("Las contraseñas no coinciden.");
+      if(password.length<8) throw new Error("Usá al menos 8 caracteres.");
+
+      const {data,error}=await client.auth.signUp({
+        email,
+        password,
+        options:{
+          emailRedirectTo:window.location.origin+window.location.pathname
+        }
+      });
+
+      if(error) throw error;
+
+      if(data.session){
+        showStatus("¡Cuenta creada! Entraste a Fafy.","success");
+        await refreshSession();
+        setTimeout(closeAuth,900);
+      }else{
+        showStatus("Registro enviado. Revisá tu correo para confirmar la cuenta.","success");
+        setMode("login");
+      }
+    }else{
+      const {error}=await client.auth.signInWithPassword({email,password});
+      if(error) throw error;
+      showStatus("¡Sesión iniciada!","success");
+      await refreshSession();
+      setTimeout(closeAuth,700);
+    }
+  }catch(error){
+    showStatus(error.message||"Ocurrió un error. Intentá de nuevo.","error");
+  }finally{
+    submit.disabled=false;
+    submit.textContent=authMode==="signup"?"Crear cuenta":"Entrar";
+  }
+});
+
+async function refreshSession(){
+  try{
+    const client=getClient();
+    const {data,error}=await client.auth.getSession();
+    if(error) throw error;
+
+    const user=data.session?.user;
+
+    if(user){
+      $("publicPage").classList.add("hidden");
+      $("accountPage").classList.add("show");
+      $("accountEmail").textContent=user.email||"Sesión iniciada";
+    }else{
+      $("publicPage").classList.remove("hidden");
+      $("accountPage").classList.remove("show");
+    }
+  }catch(error){
+    console.warn("No se pudo comprobar la sesión:",error.message);
+  }
+}
+
+$("logoutButton").onclick=async()=>{
+  try{
+    const {error}=await getClient().auth.signOut();
+    if(error) throw error;
+    await refreshSession();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }catch(error){
+    alert(error.message||"No se pudo cerrar sesión.");
+  }
+};
+
+$("profileButton").onclick=()=>{
+  $("profileNotice").textContent="El editor de perfil todavía no está implementado.";
+  $("profileNotice").className="status show";
+};
+
+// Los pagos y la comisión de Mercado Pago todavía no están implementados.
+refreshSession();
 </script>
+
 </body>
 </html>
