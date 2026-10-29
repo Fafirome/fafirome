@@ -359,12 +359,9 @@ try {
   }
 } catch(e) {}
 
-function getClient(){
-  if(supabaseClient) return supabaseClient;
-  if(!window.supabase) throw new Error("No se pudo cargar Supabase. Revisá tu conexión.");
-  if(SUPABASE_PUBLISHABLE_KEY.includes("PONE_AQUI")){
-    throw new Error("Falta colocar la clave pública de Supabase en el código.");
-  }
+if(SUPABASE_PUBLISHABLE_KEY.includes("PONE_AQUI")){
+  throw new Error("Falta colocar la clave pública de Supabase en el código.");
+}
   supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
