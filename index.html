@@ -295,7 +295,7 @@ footer {
     <a href="#explorar">Explorar</a>
     <a href="#creadores">Creadores</a>
   </nav>
-  <button class="btn" onclick="showMessage('El registro real se conectará con Supabase.')">Entrar</button>
+  <button class="btn" onclick="abrirAcceso()">Entrar</button>
 </header>
 
 <main>
@@ -451,6 +451,10 @@ function acceptAge() {
 function leaveSite() {
   document.body.innerHTML =
     '<main style="text-align:center;margin-top:20vh"><h1>FAFY</h1><p>Necesitás tener 18 años o más para continuar.</p></main>';
+}
+
+function abrirAcceso() {
+  alert("El registro e inicio de sesión de FAFY todavía necesitan conectarse con Supabase.");
 }
 </script>
 </body>
